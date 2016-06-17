@@ -32,11 +32,6 @@ public class City implements Serializable {
     @ManyToMany(targetEntity = WaterSource.class)
     private List<WaterSource> waterSources;
 
-    @OneToMany(targetEntity = MeasurementStation.class)
-    private List<MeasurementStation> measurementStations;
-
-
-
     public City() {
 
     }
@@ -71,14 +66,6 @@ public class City implements Serializable {
 
     public void setWaterSources(List<WaterSource> waterSources) {
         this.waterSources = waterSources;
-    }
-
-    public List<MeasurementStation> getMeasurementStations() {
-        return this.measurementStations;
-    }
-
-    public void setMeasurementStations(List<MeasurementStation> measurementStations) {
-        this.measurementStations = measurementStations;
     }
 
     public long getPopulation() {
