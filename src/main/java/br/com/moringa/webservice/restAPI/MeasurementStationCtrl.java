@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moringa.webservice.entity.MeasurementStation;
-import br.com.moringa.webservice.repository.MeasurementStationRepository;
+import br.com.moringa.webservice.entity.MeasurementStation;
+import br.com.moringa.webservice.service.MeasurementStationService;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
@@ -21,12 +22,21 @@ import br.com.moringa.webservice.repository.MeasurementStationRepository;
 public class MeasurementStationCtrl {
 
     @Autowired
-    MeasurementStationRepository msRepository;
-
+    MeasurementStationService msService;
 
     @RequestMapping(value="",method = RequestMethod.GET)
     public ResponseEntity<List<MeasurementStation>> findAll() {
-        return new ResponseEntity<List<MeasurementStation>>(msRepository.findAll(), HttpStatus.OK);
+    	
+    	List<MeasurementStation> response = msService.findAll();
+    	HttpStatus status;
+    	
+    	if(response == null || response.isEmpty()){
+    		status = HttpStatus.NOT_FOUND;
+    	}else{
+    		status = HttpStatus.OK;
+    	}
+    	
+        return new ResponseEntity<List<MeasurementStation>>(response,status);
     }
 
 }
