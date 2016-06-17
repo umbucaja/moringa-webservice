@@ -1,17 +1,15 @@
 package br.com.moringa.webservice.entity;
 
-import javax.persistence.*;
 
 /**
  * Created by Thiago Almeida on 16/06/2016.
  */
 
-@Entity
 public class Observacao {
 
-    @Id
+/*    @Id
     @GeneratedValue(generator = "id", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "id")
+    @SequenceGenerator(name = "id")*/
     private Long id;
 
     private String municipio;
@@ -20,8 +18,6 @@ public class Observacao {
     private String volAtual;
     private String percentualAtual;
     private String data;
-
-
 
     public Long getId() {
         return id;

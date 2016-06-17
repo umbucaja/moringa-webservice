@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class City implements Serializable {
 
@@ -29,6 +31,7 @@ public class City implements Serializable {
     private String state;
     private long population;
     
+    @JsonBackReference
     @ManyToMany(targetEntity = WaterSource.class)
     private List<WaterSource> waterSources;
 

@@ -17,11 +17,11 @@ public class WebserviceApplication {
 		SpringApplication.run(WebserviceApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner loadData(ObservacaoRepository observacaoRepository){
+	public CommandLineRunner loadData(/*ObservacaoRepository observacaoRepository*/){
 		String url = "http://site2.aesa.pb.gov.br/aesa/volumesAcudes.do?metodo=preparaUltimosVolumesPorAcude2";
 		return (args) ->{
-			List<Observacao> list = Parser.getObservacao(url);
-			observacaoRepository.save(list);
+//			List<Observacao> list = Parser.getObservacao(url);
+//			observacaoRepository.save(list);
 		};
 	}
 }
