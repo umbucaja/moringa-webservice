@@ -1,4 +1,4 @@
-package br.com.moringa.webservice.controller;
+package br.com.moringa.webservice.restAPI;
 
 import br.com.moringa.webservice.entity.Observacao;
 import br.com.moringa.webservice.repository.ObservacaoRepository;

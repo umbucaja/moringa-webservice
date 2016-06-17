@@ -11,8 +11,6 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 
-import static sun.plugin.javascript.navig.JSType.Document;
-
 /**
  * Created by Thiago Almeida on 16/06/2016.
  */
