@@ -81,15 +81,12 @@ public class CityCtrl {
     public ResponseEntity<LitersPerPerson> findLitersPerPerson(@PathVariable("id") Long id) {
     	
     	City city = cityService.findById(id);
+    	LitersPerPerson response = new LitersPerPerson();
     	
-    	
-    	List<WaterSource> waterSources = wsService.findByCityId(id);
-    	
-    	for (WaterSource waterSource : waterSources) {
+    	for (WaterSource waterSource : city.getWaterSources()) {
 //    		waterSource.get
 		}
     	
-    	LitersPerPerson response = new LitersPerPerson();
     	HttpStatus status = HttpStatus.NOT_FOUND;
     	
     	
