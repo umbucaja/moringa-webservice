@@ -63,14 +63,12 @@ public class CityCtrl {
     @RequestMapping(value="/{id}/watersources",method = RequestMethod.GET)
     public ResponseEntity<List<WaterSource>> findWaterSources(@PathVariable("id") Long id) {
     	
-    	City city = cityService.findById(id);
-    	List<WaterSource> response = null;
+    	List<WaterSource> response = cityService.findWaterSourcesByCityId(id);
     	HttpStatus status;
     	
-    	if(city == null || city.getWaterSources() == null || city.getWaterSources().isEmpty()){
+    	if(response == null || response.isEmpty()){
     		status = HttpStatus.NOT_FOUND;
     	}else{
-    		response = city.getWaterSources();
     		status = HttpStatus.OK;
     	}
     	
@@ -84,6 +82,12 @@ public class CityCtrl {
     	LitersPerPerson response = new LitersPerPerson();
     	
     	for (WaterSource waterSource : city.getWaterSources()) {
+    		
+    		List <WaterSourceMeasurement> wsm = waterSource.getWaterSourceMeasurements();
+    		
+//    		List
+    		
+    		
 //    		waterSource.get
 		}
     	

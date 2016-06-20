@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.moringa.webservice.entity.City;
+import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.repository.CityRepository;
 
 @Service
@@ -20,6 +21,11 @@ public class CityService {
     
     public City findById(Long id){
     	return cityRepository.findById(id);
+    }
+    
+    public List<WaterSource> findWaterSourcesByCityId(Long id){
+    	City city = cityRepository.findById(id);
+    	return city.getWaterSources();
     }
     
 	
