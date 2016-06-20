@@ -1,6 +1,7 @@
 package br.com.moringa.webservice.restAPI;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.moringa.webservice.domain.LitersPerPerson;
+import br.com.moringa.webservice.domain.LitersPerPersonDomain;
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
-import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 import br.com.moringa.webservice.service.CityService;
 import br.com.moringa.webservice.service.WaterSourceService;
 
@@ -61,9 +61,9 @@ public class CityCtrl {
     }
     
     @RequestMapping(value="/{id}/watersources",method = RequestMethod.GET)
-    public ResponseEntity<List<WaterSource>> findWaterSources(@PathVariable("id") Long id) {
+    public ResponseEntity<Set<WaterSource>> findWaterSources(@PathVariable("id") Long id) {
     	
-    	List<WaterSource> response = cityService.findWaterSourcesByCityId(id);
+    	Set<WaterSource> response = cityService.findWaterSourcesByCityId(id);
     	HttpStatus status;
     	
     	if(response == null || response.isEmpty()){
@@ -72,32 +72,22 @@ public class CityCtrl {
     		status = HttpStatus.OK;
     	}
     	
-        return new ResponseEntity<List<WaterSource>>(response,status);
+        return new ResponseEntity<Set<WaterSource>>(response,status);
     }
 
     @RequestMapping(value="/{id}/liters",method = RequestMethod.GET)
-    public ResponseEntity<LitersPerPerson> findLitersPerPerson(@PathVariable("id") Long id) {
+    public ResponseEntity<LitersPerPersonDomain> findLitersPerPerson(@PathVariable("id") Long id) {
     	
-    	City city = cityService.findById(id);
-    	LitersPerPerson response = new LitersPerPerson();
+    	LitersPerPersonDomain response = cityService.findLitersPerPerson(id);
+    	HttpStatus status;
     	
-    	for (WaterSource waterSource : city.getWaterSources()) {
-    		
-    		List <WaterSourceMeasurement> wsm = waterSource.getWaterSourceMeasurements();
-    		
-//    		List
-    		
-    		
-//    		waterSource.get
-		}
+    	if(response == null){
+    		status = HttpStatus.NOT_FOUND;
+    	}else{
+    		status = HttpStatus.OK;
+    	}
     	
-    	HttpStatus status = HttpStatus.NOT_FOUND;
-    	
-    	
-    	
-    	
-    	
-        return new ResponseEntity<LitersPerPerson>(response,status);
+        return new ResponseEntity<LitersPerPersonDomain>(response,status);
     }
     
     

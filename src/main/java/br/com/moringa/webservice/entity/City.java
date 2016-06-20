@@ -3,16 +3,16 @@ package br.com.moringa.webservice.entity;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class City implements Serializable {
@@ -31,9 +31,9 @@ public class City implements Serializable {
     private String state;
     private long population;
     
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToMany(targetEntity = WaterSource.class)
-    private List<WaterSource> waterSources;
+    private Set<WaterSource> waterSources;
 
     public City() {
 
@@ -63,11 +63,11 @@ public class City implements Serializable {
         this.state = state;
     }
 
-    public List<WaterSource> getWaterSources() {
+    public Set<WaterSource> getWaterSources() {
         return this.waterSources;
     }
 
-    public void setWaterSources(List<WaterSource> waterSources) {
+    public void setWaterSources(Set<WaterSource> waterSources) {
         this.waterSources = waterSources;
     }
 

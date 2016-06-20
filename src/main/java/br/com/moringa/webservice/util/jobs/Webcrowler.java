@@ -19,8 +19,8 @@ import java.util.List;
 @EnableScheduling
 public class Webcrowler {
 
-    @Autowired
-    ObservacaoRepository observacaoRepository;
+//    @Autowired
+//    ObservacaoRepository observacaoRepository;
 
     @Scheduled(fixedDelay=5000)
     public void getObservations(){
