@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moringa.webservice.entity.WaterSource;
-import br.com.moringa.webservice.repository.WaterSourceRepository;
+import br.com.moringa.webservice.service.WaterSourceService;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
@@ -21,12 +21,21 @@ import br.com.moringa.webservice.repository.WaterSourceRepository;
 public class WaterSourceCtrl {
 
     @Autowired
-    WaterSourceRepository waterSourceRepository;
+    WaterSourceService waterSourceService;
 
 
     @RequestMapping(value="",method = RequestMethod.GET)
     public ResponseEntity<List<WaterSource>> findAll() {
-        return new ResponseEntity<List<WaterSource>>(waterSourceRepository.findAll(), HttpStatus.OK);
+    	List<WaterSource> response = waterSourceService.findAll();
+    	HttpStatus status;
+    	
+    	if(response == null || response.isEmpty()){
+    		status = HttpStatus.NOT_FOUND;
+    	}else{
+    		status = HttpStatus.OK;
+    	}
+    	
+        return new ResponseEntity<List<WaterSource>>(response,status);
     }
 
 }
