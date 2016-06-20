@@ -1,4 +1,4 @@
-package br.com.moringa.webservice.restAPI;
+package br.com.moringa.webservice.controller;
 
 import java.util.List;
 import java.util.Set;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moringa.webservice.domain.LitersPerPersonDomain;
+import br.com.moringa.webservice.domain.object.LitersPerPerson;
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.service.CityService;

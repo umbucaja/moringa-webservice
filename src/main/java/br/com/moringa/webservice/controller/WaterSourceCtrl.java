@@ -1,4 +1,4 @@
-package br.com.moringa.webservice.restAPI;
+package br.com.moringa.webservice.controller;
 
 import java.util.List;
 
@@ -9,25 +9,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.moringa.webservice.entity.MeasurementStation;
-import br.com.moringa.webservice.entity.MeasurementStation;
-import br.com.moringa.webservice.service.MeasurementStationService;
+import br.com.moringa.webservice.entity.WaterSource;
+import br.com.moringa.webservice.service.WaterSourceService;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
  */
 
 @RestController
-@RequestMapping("/stations")
-public class MeasurementStationCtrl {
+@RequestMapping("/watersources")
+public class WaterSourceCtrl {
 
     @Autowired
-    MeasurementStationService msService;
+    WaterSourceService waterSourceService;
+
 
     @RequestMapping(value="",method = RequestMethod.GET)
-    public ResponseEntity<List<MeasurementStation>> findAll() {
-    	
-    	List<MeasurementStation> response = msService.findAll();
+    public ResponseEntity<List<WaterSource>> findAll() {
+    	List<WaterSource> response = waterSourceService.findAll();
     	HttpStatus status;
     	
     	if(response == null || response.isEmpty()){
@@ -36,7 +35,7 @@ public class MeasurementStationCtrl {
     		status = HttpStatus.OK;
     	}
     	
-        return new ResponseEntity<List<MeasurementStation>>(response,status);
+        return new ResponseEntity<List<WaterSource>>(response,status);
     }
 
 }
