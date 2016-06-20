@@ -19,4 +19,9 @@ public class WaterSourceService {
     	return WaterSourceRepository.findAll();
     }
 	
+    public List<WaterSource> findByCityId(Long id){
+    	return WaterSourceRepository.findByCityId(id);
+    }
+    
+    
 }

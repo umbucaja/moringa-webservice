@@ -9,5 +9,5 @@ import br.com.moringa.webservice.entity.WaterSource;
 public interface WaterSourceRepository extends CrudRepository<WaterSource, Long> {
 
 	List<WaterSource> findAll();
-	
+	List<WaterSource> findByCityId(Long id);
 }
