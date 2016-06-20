@@ -5,6 +5,10 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +19,7 @@ import java.util.List;
  * Created by Thiago Almeida on 16/06/2016.
  */
 public class Parser {
+
     public static List<Observacao> getObservacao(String url) {
         Document doc = null;
         try {
