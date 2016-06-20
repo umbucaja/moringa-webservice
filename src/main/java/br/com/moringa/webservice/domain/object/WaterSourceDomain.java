@@ -1,4 +1,4 @@
-package br.com.moringa.webservice.domain;
+package br.com.moringa.webservice.domain.object;
 
 import java.util.List;
 

@@ -11,8 +11,8 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.moringa.webservice.domain.CityDomain;
-import br.com.moringa.webservice.domain.LitersPerPersonDomain;
+import br.com.moringa.webservice.domain.object.CityDomain;
+import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;

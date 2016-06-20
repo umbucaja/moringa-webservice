@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.moringa.webservice.domain.LitersPerPersonDomain;
-import br.com.moringa.webservice.domain.object.LitersPerPerson;
+import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.service.CityService;
