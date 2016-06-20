@@ -28,6 +28,7 @@ public class WaterSource implements Serializable {
     private String name;
     private String measurementUnit;
     private float capacity;
+    private String type;
 	
     @ManyToMany(targetEntity = City.class, mappedBy = "waterSources")
     private List<City> cities;
@@ -101,4 +102,12 @@ public class WaterSource implements Serializable {
     public void setCapacity(float capacity) {
         this.capacity = capacity;
     }
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 }
