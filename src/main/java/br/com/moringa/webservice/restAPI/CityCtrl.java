@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.moringa.webservice.domain.LitersPerPerson;
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
+import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 import br.com.moringa.webservice.service.CityService;
 import br.com.moringa.webservice.service.WaterSourceService;
 
@@ -26,6 +27,7 @@ public class CityCtrl {
 
     @Autowired
     CityService cityService;
+    @Autowired
     WaterSourceService wsService;
     
     @RequestMapping(value="",method = RequestMethod.GET)
@@ -79,7 +81,14 @@ public class CityCtrl {
     public ResponseEntity<LitersPerPerson> findLitersPerPerson(@PathVariable("id") Long id) {
     	
     	City city = cityService.findById(id);
+    	
+    	
     	List<WaterSource> waterSources = wsService.findByCityId(id);
+    	
+    	for (WaterSource waterSource : waterSources) {
+//    		waterSource.get
+		}
+    	
     	LitersPerPerson response = new LitersPerPerson();
     	HttpStatus status = HttpStatus.NOT_FOUND;
     	
