@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.moringa.webservice.domain.LitersPerPerson;
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.service.CityService;
@@ -43,33 +44,51 @@ public class CityCtrl {
     }
     
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
-    public ResponseEntity<List<WaterSource>> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<City> findById(@PathVariable("id") Long id) {
     	
-    	List<WaterSource> response = wsService.findByCityId(id);
+    	City city = cityService.findById(id);
     	HttpStatus status;
     	
-    	if(response == null || response.isEmpty()){
+    	if(city == null){
     		status = HttpStatus.NOT_FOUND;
     	}else{
+    		status = HttpStatus.OK;
+    	}
+    	
+        return new ResponseEntity<City>(city,status);
+    }
+    
+    @RequestMapping(value="/{id}/watersources",method = RequestMethod.GET)
+    public ResponseEntity<List<WaterSource>> findWaterSources(@PathVariable("id") Long id) {
+    	
+    	City city = cityService.findById(id);
+    	List<WaterSource> response = null;
+    	HttpStatus status;
+    	
+    	if(city == null || city.getWaterSources() == null || city.getWaterSources().isEmpty()){
+    		status = HttpStatus.NOT_FOUND;
+    	}else{
+    		response = city.getWaterSources();
     		status = HttpStatus.OK;
     	}
     	
         return new ResponseEntity<List<WaterSource>>(response,status);
     }
-    
-    @RequestMapping(value="/{id}/watersources",method = RequestMethod.GET)
-    public ResponseEntity<City> findWaterSources(@PathVariable("id") Long id) {
-    	
-    	City response = cityService.findById(id);
-    	HttpStatus status;
-    	
-    	if(response == null){
-    		status = HttpStatus.NOT_FOUND;
-    	}else{
-    		status = HttpStatus.OK;
-    	}
-    	
-        return new ResponseEntity<City>(response,status);
-    }
 
+    @RequestMapping(value="/{id}/liters",method = RequestMethod.GET)
+    public ResponseEntity<LitersPerPerson> findLitersPerPerson(@PathVariable("id") Long id) {
+    	
+    	City city = cityService.findById(id);
+    	List<WaterSource> waterSources = wsService.findByCityId(id);
+    	LitersPerPerson response = new LitersPerPerson();
+    	HttpStatus status = HttpStatus.NOT_FOUND;
+    	
+    	
+    	
+    	
+    	
+        return new ResponseEntity<LitersPerPerson>(response,status);
+    }
+    
+    
 }
