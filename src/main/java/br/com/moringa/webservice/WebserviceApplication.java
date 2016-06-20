@@ -16,12 +16,4 @@ public class WebserviceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WebserviceApplication.class, args);
 	}
-	@Bean
-	public CommandLineRunner loadData(ObservacaoRepository observacaoRepository){
-		String url = "http://site2.aesa.pb.gov.br/aesa/volumesAcudes.do?metodo=preparaUltimosVolumesPorAcude2";
-		return (args) ->{
-			List<Observacao> list = Parser.getObservacao(url);
-			observacaoRepository.save(list);
-		};
-	}
 }
