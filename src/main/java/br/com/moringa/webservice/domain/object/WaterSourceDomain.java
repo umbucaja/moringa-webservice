@@ -1,14 +1,7 @@
 package br.com.moringa.webservice.domain.object;
 
-import java.util.List;
-
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
-import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 
 public class WaterSourceDomain {
 
@@ -19,7 +12,13 @@ public class WaterSourceDomain {
     private String type;
     private City city;
 	
-	private WaterSourceDomain() {
+	private WaterSourceDomain(WaterSource ws) {
+		this.id = ws.getId();
+		this.name = ws.getName();
+		this.measurementUnit = ws.getMeasurementUnit();
+		this.capacity = ws.getCapacity();
+		this.type = ws.getType();
+		this.city = ws.getCity();
 	}
 	
 	public WaterSource toWaterSource(WaterSourceDomain domain){
@@ -27,10 +26,6 @@ public class WaterSourceDomain {
 		return ws;
 	}
 	
-	public WaterSourceDomain toWaterSourceDomain(WaterSource ws){
-		WaterSourceDomain domain = new WaterSourceDomain();
-		return domain;
-	}
 
 
 	

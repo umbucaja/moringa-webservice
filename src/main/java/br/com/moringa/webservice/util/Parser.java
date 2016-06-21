@@ -1,13 +1,5 @@
 package br.com.moringa.webservice.util;
 
-import br.com.moringa.webservice.domain.object.Station;
-import br.com.moringa.webservice.entity.Observacao;
-import br.com.moringa.webservice.entity.WaterSourceMeasurement;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Node;
-
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
@@ -15,6 +7,15 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Node;
+
+import br.com.moringa.webservice.domain.object.Station;
+import br.com.moringa.webservice.domain.object.WaterSourceMeasurementDomain;
+import br.com.moringa.webservice.entity.Observacao;
 
 /**
  * Created by Thiago Almeida on 16/06/2016.
@@ -52,11 +53,11 @@ public class Parser {
                     Station station = new Station();
                     StringEscapeUtils.unescapeHtml4(elements.get(i).childNodes().get(1).childNodes().get(0).toString());
                     station.setName(StringEscapeUtils.unescapeHtml4(elements.get(i).childNodes().get(1).childNodes().get(0).toString()));
-                    station.setValues(new LinkedList<WaterSourceMeasurement>());
+                    station.setValues(new LinkedList<WaterSourceMeasurementDomain>());
                     for (int j = 3; j < elements.get(i).childNodes().size() ; j++) {
                         if(j%2 != 0){
                             String day = days.childNodes().get(3).childNodes().get(0).childNodes().get(0).toString();
-                            WaterSourceMeasurement water = new WaterSourceMeasurement();
+                            WaterSourceMeasurementDomain water = new WaterSourceMeasurementDomain();
                             try{
                                 if(!elements.get(i).childNodes().get(j).childNodes().get(0).childNodes().get(0).toString().trim().equals("--")){
                                     try{

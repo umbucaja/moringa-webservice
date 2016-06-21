@@ -1,18 +1,17 @@
-package br.com.moringa.webservice.domain.webcrowler;
+package br.com.moringa.webservice.domain.webcrawler;
 
-import br.com.moringa.webservice.domain.object.Station;
-import br.com.moringa.webservice.entity.Observacao;
-import br.com.moringa.webservice.repository.ObservacaoRepository;
-import br.com.moringa.webservice.util.Parser;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.text.ParseException;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.text.ParseException;
-import java.util.LinkedList;
-import java.util.List;
+import br.com.moringa.webservice.domain.object.Station;
+import br.com.moringa.webservice.entity.Observacao;
+import br.com.moringa.webservice.util.Parser;
 
 /**
  * Created by Thiago Almeida on 20/06/2016.
@@ -20,7 +19,7 @@ import java.util.List;
 @Configuration
 @EnableAsync
 @EnableScheduling
-public class Webcrowler {
+public class Webcrawler {
 
     @Scheduled(fixedDelay=86400000)
     public void getObservations(){

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Station {
     String name;
-    List<WaterSourceMeasurement> values;
+    List<WaterSourceMeasurementDomain> values;
 
 
     public String getName() {
@@ -20,11 +20,11 @@ public class Station {
         this.name = name;
     }
 
-    public List<WaterSourceMeasurement> getValues() {
+    public List<WaterSourceMeasurementDomain> getValues() {
         return values;
     }
 
-    public void setValues(List<WaterSourceMeasurement> values) {
+    public void setValues(List<WaterSourceMeasurementDomain> values) {
         this.values = values;
     }
 }

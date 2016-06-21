@@ -1,6 +1,8 @@
 package br.com.moringa.webservice.domain.object;
 
-import java.sql.Date;
+
+
+import java.util.Date;
 
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 
@@ -10,7 +12,7 @@ public class WaterSourceMeasurementDomain {
     private float value;
     private Date date;
     
-	private WaterSourceMeasurementDomain() {
+	public WaterSourceMeasurementDomain() {
 	}
 	
 	public WaterSourceMeasurement toWaterSourceMeasurement(WaterSourceMeasurementDomain domain){
@@ -22,4 +24,31 @@ public class WaterSourceMeasurementDomain {
 		WaterSourceMeasurementDomain domain = new WaterSourceMeasurementDomain();
 		return domain;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public float getValue() {
+		return value;
+	}
+
+	public void setValue(float value) {
+		this.value = value;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	
+	
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,12 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
-import com.fasterxml.jackson.annotation.JacksonAnnotation;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -48,13 +45,8 @@ public class WaterSource implements Serializable {
     private City city;
 
     @JsonManagedReference
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = WaterSourceMeasurement.class)
+    @OneToMany(targetEntity = WaterSourceMeasurement.class)
     private List<WaterSourceMeasurement> waterSourceMeasurements;
-
-
-
-
 
     public WaterSource() {
 
