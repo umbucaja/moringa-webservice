@@ -8,7 +8,9 @@ import br.com.moringa.webservice.entity.City;
 
 public interface CityRepository extends CrudRepository<City, Long> {
 
-	List<City> findAll();
-	City findById(Long id);
-	List<City> findByWaterSourcesId(Long id);
+    @Override
+    List<City> findAll();
+    City findById(Long id);
+    List<City> findByWaterSourcesId(Long id);
+    List<City> findByName(String name);
 }
