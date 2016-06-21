@@ -220,17 +220,9 @@ public class Parser {
 				wsm.setDate(fmt.parse(data));
 				wsm.setValue(Float.valueOf(volAtual));
 				ws.getMeasurementList().add(wsm);
+				
 				wsList.add(ws);
 			}
-
-//            obs.setVolAtual(volAtual);
-//            obs.setMunicipio(municipio);
-//            obs.setAcude(acude);
-//            obs.setCapMax(capMax);
-//            obs.setData(data);
-//            obs.setPercentualAtual(volTotal);
-//
-//            observacoes.add(obs);
 
         }
         return wsList;

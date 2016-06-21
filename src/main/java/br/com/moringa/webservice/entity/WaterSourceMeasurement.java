@@ -3,6 +3,7 @@ package br.com.moringa.webservice.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,8 +24,11 @@ public class WaterSourceMeasurement implements Serializable {
     @SequenceGenerator(name = "id")
     private Long id;
 
+	@Column
     private float value;
-    private Date date;
+    
+	@Column
+	private Date date;
 
     @ManyToOne(targetEntity = WaterSource.class)
     private WaterSource waterSource;
@@ -56,4 +60,12 @@ public class WaterSourceMeasurement implements Serializable {
     public void setValue(float value) {
         this.value = value;
     }
+
+	public WaterSource getWaterSource() {
+		return waterSource;
+	}
+
+	public void setWaterSource(WaterSource waterSource) {
+		this.waterSource = waterSource;
+	}
 }

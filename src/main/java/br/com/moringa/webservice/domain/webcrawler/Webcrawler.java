@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
+import br.com.moringa.webservice.service.WaterSourceMeasurementService;
 import br.com.moringa.webservice.service.WaterSourceService;
 import br.com.moringa.webservice.util.Parser;
 
@@ -26,12 +27,15 @@ public class Webcrawler {
 	@Autowired
 	WaterSourceService wsService;
 	
+	@Autowired
+	WaterSourceMeasurementService wsmService;
+	
     @Scheduled(fixedDelay=86400000)
     public void getObservations() throws ParseException{
         String url = "http://site2.aesa.pb.gov.br/aesa/volumesAcudes.do?metodo=preparaUltimosVolumesPorAcude2";
         List<WaterSourceDomain> list = Parser.getMeasurements(url);
         
-        wsService.addMeasurements(list);
+        wsmService.addMeasurements(list);
         
     }
 

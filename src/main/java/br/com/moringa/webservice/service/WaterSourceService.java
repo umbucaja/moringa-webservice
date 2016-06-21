@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
+import br.com.moringa.webservice.domain.object.WaterSourceMeasurementDomain;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.repository.WaterSourceRepository;
 
@@ -32,12 +33,17 @@ public class WaterSourceService {
     	for (WaterSourceDomain waterSourceDomain : wsListDomain) {
     		
     		WaterSource ws = wsRepository.findByName(waterSourceDomain.getName());
-    		ws.getWaterSourceMeasurements().addAll(WaterSourceDomain.parseMeasurementList(waterSourceDomain.getMeasurementList()));
-    		wsList.add(ws);
+    		if(null != ws){
+    			
+    			ws.getWaterSourceMeasurements().addAll(WaterSourceDomain.parseMeasurementList(waterSourceDomain.getMeasurementList()));
+    			wsList.add(ws);
+    			wsRepository.save(ws);
+    		}
 		}
     	
-    	wsRepository.save(wsList);
+//    	List<WaterSource> wsList2 = (List<WaterSource>) wsRepository.save(wsList);
     	
+//    	System.out.println(wsList2);
     }
     
 }
