@@ -1,7 +1,5 @@
 package br.com.moringa.webservice.domain.object;
 
-import br.com.moringa.webservice.entity.WaterSourceMeasurement;
-
 import java.util.List;
 
 /**
