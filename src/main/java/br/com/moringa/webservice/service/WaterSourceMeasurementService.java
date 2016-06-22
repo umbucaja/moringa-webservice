@@ -3,6 +3,7 @@ package br.com.moringa.webservice.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
@@ -37,7 +38,11 @@ public class WaterSourceMeasurementService {
     			WaterSourceMeasurement wsm = domain.toWaterSourceMeasurement();
     			wsm.setWaterSource(ws);
     			
-    			wsmRepository.save(wsm);
+    			try {
+    				wsmRepository.save(wsm);
+				} catch (DataIntegrityViolationException dive) {
+					// TODO: handle exception
+				}
     		}
 		}
     }
