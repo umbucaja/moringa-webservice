@@ -10,4 +10,5 @@ public interface WaterSourceRepository extends CrudRepository<WaterSource, Long>
 
 	List<WaterSource> findAll();
 	List<WaterSource> findByCityId(Long id);
+	WaterSource findByName(String name);
 }

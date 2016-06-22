@@ -3,13 +3,18 @@ package br.com.moringa.webservice.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table( uniqueConstraints = { @UniqueConstraint( columnNames = { "date", "water_source_id" } ) } )
 public class WaterSourceMeasurement implements Serializable {
 
 	/**
@@ -22,9 +27,15 @@ public class WaterSourceMeasurement implements Serializable {
     @SequenceGenerator(name = "id")
     private Long id;
 
+	@Column
     private float value;
-    private Date date;
+    
+	@Column
+	private Date date;
 
+    @ManyToOne(targetEntity = WaterSource.class)
+    private WaterSource waterSource;
+    
     public WaterSourceMeasurement() {
 
     }
@@ -52,4 +63,12 @@ public class WaterSourceMeasurement implements Serializable {
     public void setValue(float value) {
         this.value = value;
     }
+
+	public WaterSource getWaterSource() {
+		return waterSource;
+	}
+
+	public void setWaterSource(WaterSource waterSource) {
+		this.waterSource = waterSource;
+	}
 }

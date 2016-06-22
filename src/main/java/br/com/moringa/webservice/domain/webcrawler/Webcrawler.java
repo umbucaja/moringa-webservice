@@ -1,18 +1,20 @@
-package br.com.moringa.webservice.domain.webcrowler;
+package br.com.moringa.webservice.domain.webcrawler;
 
-import br.com.moringa.webservice.domain.object.Station;
-import br.com.moringa.webservice.entity.Observacao;
-import br.com.moringa.webservice.repository.ObservacaoRepository;
-import br.com.moringa.webservice.util.Parser;
+import java.text.ParseException;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import java.text.ParseException;
-import java.util.LinkedList;
-import java.util.List;
+import br.com.moringa.webservice.domain.object.Station;
+import br.com.moringa.webservice.domain.object.WaterSourceDomain;
+import br.com.moringa.webservice.service.WaterSourceMeasurementService;
+import br.com.moringa.webservice.service.WaterSourceService;
+import br.com.moringa.webservice.util.Parser;
 
 /**
  * Created by Thiago Almeida on 20/06/2016.
@@ -20,13 +22,21 @@ import java.util.List;
 @Configuration
 @EnableAsync
 @EnableScheduling
-public class Webcrowler {
+public class Webcrawler {
 
+	@Autowired
+	WaterSourceService wsService;
+	
+	@Autowired
+	WaterSourceMeasurementService wsmService;
+	
     @Scheduled(fixedDelay=86400000)
-    public void getObservations(){
+    public void getObservations() throws ParseException{
         String url = "http://site2.aesa.pb.gov.br/aesa/volumesAcudes.do?metodo=preparaUltimosVolumesPorAcude2";
-        List<Observacao> list = Parser.getObservacao(url);
-        //TODO: Salvar no banco.
+        List<WaterSourceDomain> list = Parser.getMeasurements(url);
+        
+        wsmService.addMeasurements(list);
+        
     }
 
     @Scheduled(fixedDelay=86400000)
