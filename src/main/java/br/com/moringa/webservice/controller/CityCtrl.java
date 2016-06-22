@@ -1,5 +1,6 @@
 package br.com.moringa.webservice.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -97,6 +98,23 @@ public class CityCtrl {
 
         return new ResponseEntity<LitersPerPersonDomain>(response,status);
     }
+
+    @RequestMapping(value="/{id}/water",method = RequestMethod.GET)
+    public ResponseEntity<Date> findDateEndOfWater(@PathVariable("id") Long id) {
+
+        Date response = cityService.getEndOfWater(id);
+        HttpStatus status;
+
+        if(response == null){
+            status = HttpStatus.NOT_FOUND;
+        }else{
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<Date>(response,status);
+    }
+
+
 
 
 }
