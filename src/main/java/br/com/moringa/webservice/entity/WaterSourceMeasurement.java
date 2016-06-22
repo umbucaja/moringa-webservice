@@ -13,6 +13,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table( uniqueConstraints = { @UniqueConstraint( columnNames = { "date", "water_source_id" } ) } )
 public class WaterSourceMeasurement implements Serializable {
@@ -33,6 +35,7 @@ public class WaterSourceMeasurement implements Serializable {
 	@Column
 	private Date date;
 
+	@JsonBackReference
     @ManyToOne(targetEntity = WaterSource.class)
     private WaterSource waterSource;
     
