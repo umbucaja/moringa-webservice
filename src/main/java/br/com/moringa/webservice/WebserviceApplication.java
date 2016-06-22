@@ -1,14 +1,7 @@
 package br.com.moringa.webservice;
 
-import br.com.moringa.webservice.entity.Observacao;
-import br.com.moringa.webservice.repository.ObservacaoRepository;
-import br.com.moringa.webservice.util.Parser;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-import java.util.List;
 
 @SpringBootApplication
 public class WebserviceApplication {
