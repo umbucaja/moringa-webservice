@@ -43,7 +43,6 @@ public class CityService {
     public LitersPerPersonDomain findLitersPerPerson(Long id){
 
         City city = findById(id);
-        Map<Long,List> mapCities = new HashMap<>();
         List<CityDomain> cityDomainList = new ArrayList<>();
         LitersPerPersonDomain liters = new LitersPerPersonDomain();
 
@@ -92,17 +91,17 @@ public class CityService {
 
     public Date getEndOfWater(Long cityId){
         City city =  cityRepository.findOne(cityId);
+        return getEndWater(city);
+    }
 
-        //TODO projetar tendência de acordo com a média de secagem do açude
-        float median = 136;
-        float liters = amountLitersByCity(city);
-        long persons = amountPersonsByCity(city);
-        long days = (long) (liters/median/persons)*1000*3600*24;
-        long today = new Date().getTime();
+    private Date getEndWater(City city) {
+        float median = 0.136f;
+        float cm = amountLitersByCity(city);
+        float persons = amountPersonsByCity(city);
+        long days = (long) (((cm/median)/persons)*1000*3600*24);
         Date result = new Date(new Date().getTime()+days);
         return result;
     }
-
     public List<Object> getInfoWaterSources(Long id){
         City city = cityRepository.findOne(id);
         List<Object> result = null;
@@ -139,7 +138,7 @@ public class CityService {
                 }
             }
         }
-        return amountOfLiters;
+        return  amountOfLiters;
     }
 
     private long amountPersonsByCity(City city){
@@ -158,7 +157,7 @@ public class CityService {
                     for (CityDomain cityDomain : tempList) {
                         if(!cityDomainList.contains(cityDomain)){
                             cityDomainList.add(cityDomain);
-                            amountOfPopulation =+ cityDomain.getPopulation();
+                            amountOfPopulation += cityDomain.getPopulation();
                         }
                     }
                 }
