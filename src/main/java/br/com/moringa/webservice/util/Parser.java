@@ -2,6 +2,7 @@ package br.com.moringa.webservice.util;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
@@ -14,6 +15,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
 
 import br.com.moringa.webservice.domain.object.Station;
+import br.com.moringa.webservice.domain.object.WaterSourceDomain;
 import br.com.moringa.webservice.domain.object.WaterSourceMeasurementDomain;
 import br.com.moringa.webservice.entity.Observacao;
 
@@ -89,8 +91,12 @@ public class Parser {
         return stations;
     }
 
-    public static List<Observacao> getObservacao(String url) {
+    public static List<WaterSourceDomain> getMeasurements(String url) throws ParseException{
         Document doc = null;
+        
+        Locale localeBR = new Locale("pt", "BR");
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy", localeBR);
+        
         try {
             doc = Jsoup.parse(new URL(url).openStream(), "ISO-8859-1", url);
         } catch (IOException e) {
@@ -113,10 +119,13 @@ public class Parser {
                 .childNodes().get(1)
                 .childNodes();
         Node element = elements.get(0);
-        List<Observacao> observacoes = new LinkedList<Observacao>();
-
+//        List<Observacao> observacoes = new LinkedList<Observacao>();
+        List<WaterSourceDomain> wsList = new LinkedList<>();
+        
         for (int i = 2; i < elements.size(); i += 2) {
-            Observacao obs = new Observacao();
+//            Observacao obs = new Observacao();
+            WaterSourceDomain ws = new WaterSourceDomain();
+            WaterSourceMeasurementDomain wsm = new WaterSourceMeasurementDomain();
 
             String municipio = "";
             try {
@@ -153,9 +162,11 @@ public class Parser {
                     volAtual = volAtual.replace("\n", "");
                     volAtual = volAtual.replace("[", "");
                     volAtual = volAtual.replace("]", "");
+                    volAtual = volAtual.replace("*", "");
                 } else {
                     volAtual = volAtual.replace("<b>", "");
                     volAtual = volAtual.replace("</b>", "");
+                    volAtual = volAtual.replace("*", "");
                 }
             }
 
@@ -167,11 +178,13 @@ public class Parser {
                 }
                 volTotal = volTotal.replace("<b>", "");
                 volTotal = volTotal.replace("</b>", "");
+                volTotal = volTotal.replace("*", "");
             } catch (Exception e) {
                 volTotal = elements.get(i).childNodes().get(9).childNodes().get(1).childNodes().toString();
                 volTotal = volTotal.replace("\n", "");
                 volTotal = volTotal.replace("[", "");
                 volTotal = volTotal.replace("]", "");
+                volTotal = volTotal.replace("*", "");
             }
 
             if (volTotal.equalsIgnoreCase("sangrando")) {
@@ -183,28 +196,35 @@ public class Parser {
                 data = elements.get(i).childNodes().get(11).childNodes().get(1).childNodes().get(1).childNodes().get(0).childNodes().get(0).toString();
                 data = data.replace("<b>", "");
                 data = data.replace("</b>", "");
+                data = data.replace("*", "");
+                data = data.trim();
             } catch (Exception e) {
                 try {
                     data = elements.get(i).childNodes().get(11).childNodes().get(1).childNodes().get(1).childNodes().get(0).toString();
                     data = data.replace("<b>", "");
                     data = data.replace("</b>", "");
+                    data = data.replace("*", "");
+                    data = data.trim();
                 } catch (Exception j) {
                     elements.get(i).childNodes().get(11).childNodes().get(1).childNodes().get(0).toString();
                     data = elements.get(i).childNodes().get(11).childNodes().get(1).childNodes().get(0).toString();
                     data = data.replace("\n", "");
+                    data = data.replace("*", "");
+                    data = data.trim();
                 }
             }
 
-            obs.setVolAtual(volAtual);
-            obs.setMunicipio(municipio);
-            obs.setAcude(acude);
-            obs.setCapMax(capMax);
-            obs.setData(data);
-            obs.setPercentualAtual(volTotal);
-
-            observacoes.add(obs);
+			
+			if(!"".equals(data)){
+				ws.setName(acude);
+				wsm.setDate(fmt.parse(data));
+				wsm.setValue(Float.valueOf(volAtual));
+				ws.getMeasurementList().add(wsm);
+				
+				wsList.add(ws);
+			}
 
         }
-        return observacoes;
+        return wsList;
     }
 }

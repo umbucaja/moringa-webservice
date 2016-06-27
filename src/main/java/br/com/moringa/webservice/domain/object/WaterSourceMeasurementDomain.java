@@ -11,12 +11,16 @@ public class WaterSourceMeasurementDomain {
 	private Long id;
     private float value;
     private Date date;
+    private Long waterSourceId;
     
 	public WaterSourceMeasurementDomain() {
 	}
 	
-	public WaterSourceMeasurement toWaterSourceMeasurement(WaterSourceMeasurementDomain domain){
+	public WaterSourceMeasurement toWaterSourceMeasurement(){
 		WaterSourceMeasurement ws = new WaterSourceMeasurement();
+		ws.setId(this.id);
+		ws.setValue(this.value);
+		ws.setDate(this.date);
 		return ws;
 	}
 	
@@ -49,6 +53,12 @@ public class WaterSourceMeasurementDomain {
 		this.date = date;
 	}
 	
-	
+	public Long getWaterSourceId() {
+		return waterSourceId;
+	}
+
+	public void setWaterSourceId(Long waterSourceId) {
+		this.waterSourceId = waterSourceId;
+	}
 	
 }

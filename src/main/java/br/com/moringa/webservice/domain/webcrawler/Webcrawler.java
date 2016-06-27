@@ -4,13 +4,16 @@ import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import br.com.moringa.webservice.domain.object.Station;
-import br.com.moringa.webservice.entity.Observacao;
+import br.com.moringa.webservice.domain.object.WaterSourceDomain;
+import br.com.moringa.webservice.service.WaterSourceMeasurementService;
+import br.com.moringa.webservice.service.WaterSourceService;
 import br.com.moringa.webservice.util.Parser;
 
 /**
@@ -21,12 +24,22 @@ import br.com.moringa.webservice.util.Parser;
 @EnableScheduling
 public class Webcrawler {
 
-    public void getObservations(){
+	@Autowired
+	WaterSourceService wsService;
+	
+	@Autowired
+	WaterSourceMeasurementService wsmService;
+	
+    @Scheduled(fixedDelay=86400000)
+    public void getObservations() throws ParseException{
         String url = "http://site2.aesa.pb.gov.br/aesa/volumesAcudes.do?metodo=preparaUltimosVolumesPorAcude2";
-        List<Observacao> list = Parser.getObservacao(url);
-        //TODO: Salvar no banco.
+        List<WaterSourceDomain> list = Parser.getMeasurements(url);
+        
+        wsmService.addMeasurements(list);
+        
     }
 
+    @Scheduled(fixedDelay=86400000)
     public void getRainfall(){
         String url1 = "http://site2.aesa.pb.gov.br/aesa/monitoramentoPluviometria.do?metodo=listarChuvasDiarias&dia=1";
         String url2 = "http://site2.aesa.pb.gov.br/aesa/monitoramentoPluviometria.do?metodo=listarChuvasDiarias&dia=11";

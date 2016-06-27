@@ -1,6 +1,12 @@
 package br.com.moringa.webservice.service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +99,11 @@ public class CityService {
     public Date getEndOfWater(Long cityId){
         City city =  cityRepository.findOne(cityId);
 
+        //TODO projetar tendência de acordo com a média de secagem do açude
         float median = 136;
         float liters = amountLitersByCity(city);
         long persons = amountPersonsByCity(city);
-        long days = (long) ((liters/median)/persons);
+        long days = (long) (liters/median/persons)*1000*3600*24;
         long today = new Date().getTime();
         Date result = new Date(new Date().getTime()+days);
         return result;
