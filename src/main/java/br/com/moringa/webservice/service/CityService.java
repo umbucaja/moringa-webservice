@@ -1,12 +1,6 @@
 package br.com.moringa.webservice.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +119,7 @@ public class CityService {
                     source.put("capacity",waterSource.getCapacity());
                     source.put("observed",w.getValue());
                     source.put("date",w.getDate());
+                    source.put("percent",(w.getValue()/waterSource.getCapacity()));
                     result.add(source);
                 }
             }
