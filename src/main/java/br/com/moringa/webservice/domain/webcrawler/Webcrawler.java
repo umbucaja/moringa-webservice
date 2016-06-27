@@ -21,14 +21,12 @@ import br.com.moringa.webservice.util.Parser;
 @EnableScheduling
 public class Webcrawler {
 
-    @Scheduled(fixedDelay=86400000)
     public void getObservations(){
         String url = "http://site2.aesa.pb.gov.br/aesa/volumesAcudes.do?metodo=preparaUltimosVolumesPorAcude2";
         List<Observacao> list = Parser.getObservacao(url);
         //TODO: Salvar no banco.
     }
 
-    @Scheduled(fixedDelay=86400000)
     public void getRainfall(){
         String url1 = "http://site2.aesa.pb.gov.br/aesa/monitoramentoPluviometria.do?metodo=listarChuvasDiarias&dia=1";
         String url2 = "http://site2.aesa.pb.gov.br/aesa/monitoramentoPluviometria.do?metodo=listarChuvasDiarias&dia=11";

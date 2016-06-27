@@ -102,6 +102,29 @@ public class CityService {
         return result;
     }
 
+    public List<Object> getInfoWaterSources(Long id){
+        City city = cityRepository.findOne(id);
+        List<Object> result = null;
+        if(city != null){
+            result = new LinkedList();
+            for (WaterSource waterSource : city.getWaterSources()) {
+                Hibernate.initialize(waterSource);
+                Map<Object,Object> source = new HashMap<>();
+                List <WaterSourceMeasurement> wsm = waterSource.getWaterSourceMeasurements();
+                if(wsm != null && !wsm.isEmpty()){
+                    Collections.sort(wsm, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+                    WaterSourceMeasurement w = wsm.get(wsm.size()-1);
+                    source.put("name",waterSource.getName());
+                    source.put("capacity",waterSource.getCapacity());
+                    source.put("observed",w.getValue());
+                    source.put("date",w.getDate());
+                    result.add(source);
+                }
+            }
+        }
+        return result;
+    }
+
     private float amountLitersByCity(City city){
         float amountOfLiters = 0;
         if(city != null){
@@ -141,6 +164,7 @@ public class CityService {
         }
         return amountOfPopulation;
     }
+
 
 
 }

@@ -85,7 +85,7 @@ public class CityCtrl {
         return new ResponseEntity<Set<WaterSource>>(response,status);
     }
 
-    @RequestMapping(value="/{id}/liters",method = RequestMethod.GET)
+        @RequestMapping(value="/{id}/liters",method = RequestMethod.GET)
     public ResponseEntity<LitersPerPersonDomain> findLitersPerPerson(@PathVariable("id") Long id) {
 
         LitersPerPersonDomain response = cityService.findLitersPerPerson(id);
@@ -115,7 +115,20 @@ public class CityCtrl {
         return new ResponseEntity<Date>(response,status);
     }
 
+    @RequestMapping(value="/{id}/reservoir/info",method = RequestMethod.GET)
+    public ResponseEntity<List<Object>> waterSourceInfo(@PathVariable("id") Long id) {
 
+        List<Object> response = cityService.getInfoWaterSources(id);
+        HttpStatus status;
+
+        if(response == null){
+            status = HttpStatus.NOT_FOUND;
+        }else{
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<List<Object>>(response,status);
+    }
 
 
 }
