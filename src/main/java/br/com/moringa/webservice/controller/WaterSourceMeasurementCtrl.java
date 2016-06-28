@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;
-import br.com.moringa.webservice.repository.WaterSourceMeasurementRepository;
+import br.com.moringa.webservice.service.WaterSourceMeasurementService;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
@@ -21,11 +21,11 @@ import br.com.moringa.webservice.repository.WaterSourceMeasurementRepository;
 public class WaterSourceMeasurementCtrl {
 
     @Autowired
-    WaterSourceMeasurementRepository wsmRepository;
+    WaterSourceMeasurementService wsmService;
 
     @RequestMapping(value="",method = RequestMethod.GET)
     public ResponseEntity<List<WaterSourceMeasurement>> findAll() {
-        return new ResponseEntity<List<WaterSourceMeasurement>>(wsmRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<List<WaterSourceMeasurement>>(wsmService.findAll(), HttpStatus.OK);
     }
 
 }

@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.moringa.webservice.entity.MeasurementStation;
 import br.com.moringa.webservice.entity.RainFallMeasurement;
-import br.com.moringa.webservice.repository.RainFallMeasurementRepository;
+import br.com.moringa.webservice.service.RainFallMeasurementService;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
@@ -21,11 +22,20 @@ import br.com.moringa.webservice.repository.RainFallMeasurementRepository;
 public class RainFallMeasurementCtrl {
 
     @Autowired
-    RainFallMeasurementRepository rfmRepository;
+    RainFallMeasurementService rfmService;
 
     @RequestMapping(value="",method = RequestMethod.GET)
     public ResponseEntity<List<RainFallMeasurement>> findAll() {
-        return new ResponseEntity<List<RainFallMeasurement>>(rfmRepository.findAll(), HttpStatus.OK);
+    	
+    	List<RainFallMeasurement> response = rfmService.findAll();
+    	HttpStatus status;
+    	
+    	if(response == null || response.isEmpty()){
+    		status = HttpStatus.NOT_FOUND;
+    	}else{
+    		status = HttpStatus.OK;
+    	}
+    	
+        return new ResponseEntity<List<RainFallMeasurement>>(response,status);
     }
-
 }
