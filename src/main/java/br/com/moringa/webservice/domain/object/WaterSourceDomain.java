@@ -1,7 +1,9 @@
 package br.com.moringa.webservice.domain.object;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;
@@ -14,10 +16,8 @@ public class WaterSourceDomain {
     private float capacity;
     private String type;
     private CityDomain city;
-    private List<WaterSourceMeasurementDomain> measurementList;
+    private Set<WaterSourceMeasurementDomain> measurementList;
 	
-
-
 	public WaterSourceDomain(){}
     
 	public WaterSourceDomain(WaterSource ws) {
@@ -28,11 +28,18 @@ public class WaterSourceDomain {
 		this.type = ws.getType();
 	}
 	
-	public WaterSource toWaterSource(WaterSourceDomain domain){
-		WaterSource ws = new WaterSource();
-		return ws;
+	public static Set<WaterSourceDomain> toWaterSource(Set<WaterSource> waterSources){
+		Set<WaterSourceDomain> domains = new HashSet<WaterSourceDomain>();
+		
+		for (WaterSource ws : waterSources) {
+			WaterSourceDomain domain = new WaterSourceDomain(ws);
+			domains.add(domain);
+		}
+		
+		return domains;
 	}
-
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -81,9 +88,9 @@ public class WaterSourceDomain {
 		this.city = city;
 	}
 	
-	public static List<WaterSourceMeasurement> parseMeasurementList(List<WaterSourceMeasurementDomain> domainList){
+	public static Set<WaterSourceMeasurement> parseMeasurementList(Set<WaterSourceMeasurementDomain> domainList){
 		
-		List<WaterSourceMeasurement> entity = new ArrayList<WaterSourceMeasurement>();
+		Set<WaterSourceMeasurement> entity = new HashSet<WaterSourceMeasurement>();
 		for (WaterSourceMeasurementDomain wsmDomain : domainList) {
 			WaterSourceMeasurement ws = new WaterSourceMeasurement();
 			ws.setValue(wsmDomain.getValue());
@@ -91,20 +98,18 @@ public class WaterSourceDomain {
 			entity.add(ws);
 		}
 		
-		
-		
 		return entity;
 	}
 	
-    public List<WaterSourceMeasurementDomain> getMeasurementList() {
+    public Set<WaterSourceMeasurementDomain> getMeasurementList() {
     	if(measurementList == null){
-    		measurementList = new ArrayList<WaterSourceMeasurementDomain>();
+    		measurementList = new HashSet<WaterSourceMeasurementDomain>();
     	}
 		return measurementList;
 	}
 
 	public void setMeasurementList(
-			List<WaterSourceMeasurementDomain> measurementList) {
+			Set<WaterSourceMeasurementDomain> measurementList) {
 		this.measurementList = measurementList;
 	}
 	

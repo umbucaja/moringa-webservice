@@ -1,6 +1,13 @@
 package br.com.moringa.webservice.service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.moringa.webservice.domain.object.CityDomain;
 import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
+import br.com.moringa.webservice.domain.object.WaterSourceDomain;
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;
@@ -46,9 +54,11 @@ public class CityService {
     	return domainList;
     }
 
-    public Set<WaterSource> findWaterSourcesByCityId(Long id){
+    public Set<WaterSourceDomain> findWaterSourcesByCityId(Long id){
         City city = cityRepository.findById(id);
-        return city.getWaterSources();
+        Set<WaterSourceDomain> domainList = WaterSourceDomain.toWaterSource(city.getWaterSources());        
+        
+        return domainList;
     }
 
     public List<City> findByWaterSourcesId(Long id){
