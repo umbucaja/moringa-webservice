@@ -12,8 +12,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
+import br.com.moringa.webservice.service.RainFallMeasurementService;
 import br.com.moringa.webservice.service.WaterSourceMeasurementService;
-import br.com.moringa.webservice.service.WaterSourceService;
 import br.com.moringa.webservice.util.Parser;
 
 /**
@@ -25,10 +25,10 @@ import br.com.moringa.webservice.util.Parser;
 public class Webcrawler {
 
 	@Autowired
-	WaterSourceService wsService;
-	
-	@Autowired
 	WaterSourceMeasurementService wsmService;
+	
+    @Autowired
+    RainFallMeasurementService rfmService;
 	
     @Scheduled(fixedDelay=86400000)
     public void getObservations() throws ParseException{

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moringa.webservice.domain.object.CityDomain;
 import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
-import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.service.CityService;
 import br.com.moringa.webservice.service.WaterSourceService;
@@ -57,9 +56,9 @@ public class CityCtrl {
     }
 
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
-    public ResponseEntity<City> findById(@PathVariable("id") Long id) {
+    public ResponseEntity<CityDomain> findById(@PathVariable("id") Long id) {
 
-        City city = cityService.findById(id);
+    	CityDomain city = cityService.findOne(id);
         HttpStatus status;
 
         if(city == null){
@@ -68,7 +67,7 @@ public class CityCtrl {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<City>(city,status);
+        return new ResponseEntity<CityDomain>(city,status);
     }
 
     @RequestMapping(value="/{id}/watersources",method = RequestMethod.GET)

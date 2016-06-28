@@ -12,17 +12,23 @@ public class CityDomain {
     private String state;
     private long population;
     
+	public CityDomain (){
+		
+	}
+	
+	public CityDomain (City city){
+		this.id = city.getId();
+		this.name = city.getName();
+		this.population = city.getPopulation();
+		this.state = city.getState();
+	}
+    
 	public static List<CityDomain> toCityDomain(List<City> cities){
 		
 		List<CityDomain> domains = new ArrayList<>();
 		
 		for (City city : cities) {
-			CityDomain domain = new CityDomain();
-			domain.setId(city.getId());
-			domain.setName(city.getName());
-			domain.setPopulation(city.getPopulation());
-			domain.setState(city.getState());
-			
+			CityDomain domain = new CityDomain(city);
 			domains.add(domain);
 		}
 		
