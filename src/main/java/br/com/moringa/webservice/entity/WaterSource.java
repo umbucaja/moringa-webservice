@@ -44,7 +44,7 @@ public class WaterSource implements Serializable {
     private City city;
 
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER ,targetEntity = WaterSourceMeasurement.class, mappedBy = "waterSource",cascade = {CascadeType.PERSIST})
     private List<WaterSourceMeasurement> waterSourceMeasurements;
 
