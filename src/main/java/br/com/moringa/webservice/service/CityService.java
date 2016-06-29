@@ -30,16 +30,31 @@ public class CityService {
     @Autowired
     WaterSourceMeasurementRepository waterSourceMeasurementRepository;
 
-    public List<City> findAll(){
-        return cityRepository.findAll();
+    public List<CityDomain> findAll(){
+        List<City> cities = cityRepository.findAll();
+        List<CityDomain> domainList = CityDomain.toCityDomain(cities);
+    	
+    	return domainList;
+    }
+
+    public CityDomain findOne(Long id){
+    	City city = cityRepository.findOne(id);
+    	CityDomain domain = new CityDomain(city);
+    	
+        return domain;
     }
 
     public City findById(Long id){
-        return cityRepository.findOne(id);
+    	City city = cityRepository.findOne(id);
+        return city;
     }
-
-    public List<City> findByName(String name) {
-        return cityRepository.findByName(name);
+    
+    public List<CityDomain> findByName(String name) {
+    	
+        List<City> cities = cityRepository.findByName(name);
+        List<CityDomain> domainList = CityDomain.toCityDomain(cities);
+    	
+    	return domainList;
     }
 
     public Set<WaterSource> findWaterSourcesByCityId(Long id){

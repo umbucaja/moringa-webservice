@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.moringa.webservice.domain.object.RainFallMeasurementDomain;
 import br.com.moringa.webservice.entity.RainFallMeasurement;
 import br.com.moringa.webservice.repository.RainFallMeasurementRepository;
 
@@ -12,11 +13,14 @@ import br.com.moringa.webservice.repository.RainFallMeasurementRepository;
 public class RainFallMeasurementService {
 
     @Autowired
-    RainFallMeasurementRepository RainFallMeasurementRepository;
+    RainFallMeasurementRepository rfmRepository;
     
-    public List<RainFallMeasurement> findAll(){
+    public List<RainFallMeasurementDomain> findAll(){
     	
-    	return RainFallMeasurementRepository.findAll();
+        List<RainFallMeasurement> rains = rfmRepository.findAll();
+        List<RainFallMeasurementDomain> domainList = RainFallMeasurementDomain.toRainFallMeasurementDomain(rains);
+    	
+    	return domainList;
     }
 	
 }
