@@ -13,32 +13,32 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table( uniqueConstraints = { @UniqueConstraint( columnNames = { "date", "water_source_id" } ) } )
 public class WaterSourceMeasurement implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5283171155776506943L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5283171155776506943L;
 
-	@Id
+    @Id
     @GeneratedValue(generator = "id", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "id")
     private Long id;
 
-	@Column
+    @Column
     private float value;
-    
-	@Column
-	private Date date;
 
-	@JsonBackReference
+    @Column
+    private Date date;
+
+    @JsonManagedReference
     @ManyToOne(targetEntity = WaterSource.class)
     private WaterSource waterSource;
-    
+
     public WaterSourceMeasurement() {
 
     }
@@ -67,11 +67,11 @@ public class WaterSourceMeasurement implements Serializable {
         this.value = value;
     }
 
-	public WaterSource getWaterSource() {
-		return waterSource;
-	}
+    public WaterSource getWaterSource() {
+        return waterSource;
+    }
 
-	public void setWaterSource(WaterSource waterSource) {
-		this.waterSource = waterSource;
-	}
+    public void setWaterSource(WaterSource waterSource) {
+        this.waterSource = waterSource;
+    }
 }
