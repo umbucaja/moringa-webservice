@@ -33,28 +33,28 @@ public class CityService {
     public List<CityDomain> findAll(){
         List<City> cities = cityRepository.findAll();
         List<CityDomain> domainList = CityDomain.toCityDomain(cities);
-    	
-    	return domainList;
+
+        return domainList;
     }
 
     public CityDomain findOne(Long id){
-    	City city = cityRepository.findOne(id);
-    	CityDomain domain = new CityDomain(city);
-    	
+        City city = cityRepository.findOne(id);
+        CityDomain domain = new CityDomain(city);
+
         return domain;
     }
 
     public City findById(Long id){
-    	City city = cityRepository.findOne(id);
+        City city = cityRepository.findOne(id);
         return city;
     }
-    
+
     public List<CityDomain> findByName(String name) {
-    	
+
         List<City> cities = cityRepository.findByName(name);
         List<CityDomain> domainList = CityDomain.toCityDomain(cities);
-    	
-    	return domainList;
+
+        return domainList;
     }
 
     public Set<WaterSource> findWaterSourcesByCityId(Long id){
@@ -84,12 +84,11 @@ public class CityService {
                 //Sum amountOfLiters of each water source;
                 Hibernate.initialize(waterSource);
 
-                List <WaterSourceMeasurement> wsm = waterSource.getWaterSourceMeasurements();
+                WaterSourceMeasurement lastMeasutement = waterSourceMeasurementRepository.findFirstByWaterSourceIdOrderByDateDesc(waterSource.getId());
 
-                if(wsm != null && !wsm.isEmpty()){
+                if(lastMeasutement != null){
 
-                    Collections.sort(wsm, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                    amountOfLiters =+ wsm.get(wsm.size()-1).getValue();
+                    amountOfLiters =+ lastMeasutement.getValue();
 
                     List<City> cities = findByWaterSourcesId(waterSource.getId());
                     List<CityDomain> tempList = CityDomain.toCityDomain(cities);
