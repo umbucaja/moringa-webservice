@@ -53,7 +53,7 @@ public class WaterSourceMeasurementService {
 
             WaterSource ws = wsRepository.findByName(waterSourceDomain.getName());
 
-            for(WaterSourceMeasurementDomain domain: waterSourceDomain.getMeasurementList()){
+            for(WaterSourceMeasurementDomain domain: waterSourceDomain.getWaterSourceMeasurements()){
 
                 WaterSourceMeasurement wsm = domain.toWaterSourceMeasurement();
                 wsm.setWaterSource(ws);

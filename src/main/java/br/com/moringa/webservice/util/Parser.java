@@ -218,7 +218,7 @@ public class Parser {
                 ws.setName(acude);
                 wsm.setDate(fmt.parse(data));
                 wsm.setValue(Float.valueOf(volAtual));
-                ws.getMeasurementList().add(wsm);
+                ws.getWaterSourceMeasurements().add(wsm);
 
                 wsList.add(ws);
             }

@@ -37,7 +37,7 @@ public class WaterSourceService {
             WaterSource ws = wsRepository.findByName(waterSourceDomain.getName());
             if(null != ws){
 
-                ws.getWaterSourceMeasurements().addAll(WaterSourceDomain.parseMeasurementList(waterSourceDomain.getMeasurementList()));
+                ws.getWaterSourceMeasurements().addAll(WaterSourceDomain.parseMeasurementList(waterSourceDomain.getWaterSourceMeasurements()));
                 wsList.add(ws);
                 wsRepository.save(ws);
             }

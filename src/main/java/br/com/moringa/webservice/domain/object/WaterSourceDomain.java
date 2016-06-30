@@ -16,7 +16,7 @@ public class WaterSourceDomain {
     private float capacity;
     private String type;
     private CityDomain city;
-    private List<WaterSourceMeasurementDomain> measurementList;
+    private List<WaterSourceMeasurementDomain> waterSourceMeasurements;
 	
 	public WaterSourceDomain(){}
     
@@ -27,7 +27,7 @@ public class WaterSourceDomain {
 		this.capacity = ws.getCapacity();
 		this.type = ws.getType();
 		this.city = new CityDomain(ws.getCity());
-		this.measurementList = WaterSourceMeasurementDomain.toWaterSourceMeasurementDomain(ws.getWaterSourceMeasurements());
+		this.waterSourceMeasurements = WaterSourceMeasurementDomain.toWaterSourceMeasurementDomain(ws.getWaterSourceMeasurements());
 		
 	}
 	
@@ -118,16 +118,16 @@ public class WaterSourceDomain {
 		this.city = city;
 	}
 	
-    public List<WaterSourceMeasurementDomain> getMeasurementList() {
-    	if(measurementList == null){
-    		measurementList = new ArrayList<WaterSourceMeasurementDomain>();
+    public List<WaterSourceMeasurementDomain> getWaterSourceMeasurements() {
+    	if(waterSourceMeasurements == null){
+    		waterSourceMeasurements = new ArrayList<WaterSourceMeasurementDomain>();
     	}
-		return measurementList;
+		return waterSourceMeasurements;
 	}
 
-	public void setMeasurementList(
+	public void setWaterSourceMeasurements(
 			List<WaterSourceMeasurementDomain> measurementList) {
-		this.measurementList = measurementList;
+		this.waterSourceMeasurements = measurementList;
 	}
 	
 
