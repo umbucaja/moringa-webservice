@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.moringa.webservice.domain.object.CityDomain;
 import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
-import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.service.CityService;
 import br.com.moringa.webservice.service.WaterSourceService;
 

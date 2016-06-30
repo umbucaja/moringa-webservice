@@ -4,6 +4,7 @@ package br.com.moringa.webservice.domain.object;
 
 import java.util.Date;
 
+import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 
 public class WaterSourceMeasurementDomain {
@@ -11,17 +12,21 @@ public class WaterSourceMeasurementDomain {
 	private Long id;
     private float value;
     private Date date;
-    private Long waterSourceId;
+    private WaterSourceDomain waterSource;
     
 	public WaterSourceMeasurementDomain() {
 	}
 	
 	public WaterSourceMeasurement toWaterSourceMeasurement(){
-		WaterSourceMeasurement ws = new WaterSourceMeasurement();
-		ws.setId(this.id);
-		ws.setValue(this.value);
-		ws.setDate(this.date);
-		return ws;
+		WaterSourceMeasurement wsm = new WaterSourceMeasurement();
+		WaterSource ws = this.waterSource.toWaterSource();
+
+		wsm.setId(this.id);
+		wsm.setValue(this.value);
+		wsm.setDate(this.date);
+		wsm.setWaterSource(ws);	
+		
+		return wsm;
 	}
 	
 	public WaterSourceMeasurementDomain toWaterSourceDomain(WaterSourceMeasurement ws){
@@ -53,12 +58,12 @@ public class WaterSourceMeasurementDomain {
 		this.date = date;
 	}
 	
-	public Long getWaterSourceId() {
-		return waterSourceId;
+	public WaterSourceDomain getWaterSource() {
+		return waterSource;
 	}
 
-	public void setWaterSourceId(Long waterSourceId) {
-		this.waterSourceId = waterSourceId;
+	public void setWaterSource(WaterSourceDomain waterSource) {
+		this.waterSource = waterSource;
 	}
 	
 }

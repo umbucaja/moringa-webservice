@@ -16,7 +16,7 @@ public class WaterSourceDomain {
     private float capacity;
     private String type;
     private CityDomain city;
-    private Set<WaterSourceMeasurementDomain> measurementList;
+    private List<WaterSourceMeasurementDomain> measurementList;
 	
 	public WaterSourceDomain(){}
     
@@ -26,9 +26,10 @@ public class WaterSourceDomain {
 		this.measurementUnit = ws.getMeasurementUnit();
 		this.capacity = ws.getCapacity();
 		this.type = ws.getType();
+		this.city = new CityDomain(ws.getCity());
 	}
 	
-	public static Set<WaterSourceDomain> toWaterSource(Set<WaterSource> waterSources){
+	public static Set<WaterSourceDomain> toWaterSourceDomainSet(Set<WaterSource> waterSources){
 		Set<WaterSourceDomain> domains = new HashSet<WaterSourceDomain>();
 		
 		for (WaterSource ws : waterSources) {
@@ -39,6 +40,33 @@ public class WaterSourceDomain {
 		return domains;
 	}
 	
+	public WaterSource toWaterSource(){
+		
+		WaterSource ws = new WaterSource(); 
+		
+		ws.setId(this.id);
+		ws.setName(this.name);
+		ws.setMeasurementUnit(this.measurementUnit);
+		ws.setCapacity(this.capacity);
+		ws.setType(this.type);
+		
+		return ws;
+	}
+	
+	public static List<WaterSourceMeasurement> parseMeasurementList(List<WaterSourceMeasurementDomain> domainList){
+		
+		List<WaterSourceMeasurement> entity = new ArrayList<WaterSourceMeasurement>();
+		for (WaterSourceMeasurementDomain wsmDomain : domainList) {
+			WaterSourceMeasurement ws = new WaterSourceMeasurement();
+			ws.setValue(wsmDomain.getValue());
+			ws.setDate(wsmDomain.getDate());
+			ws.setId(wsmDomain.getId());
+			ws.setWaterSource(wsmDomain.getWaterSource().toWaterSource());
+			entity.add(ws);
+		}
+		
+		return entity;
+	}
 	
 	public Long getId() {
 		return id;
@@ -88,28 +116,15 @@ public class WaterSourceDomain {
 		this.city = city;
 	}
 	
-	public static Set<WaterSourceMeasurement> parseMeasurementList(Set<WaterSourceMeasurementDomain> domainList){
-		
-		Set<WaterSourceMeasurement> entity = new HashSet<WaterSourceMeasurement>();
-		for (WaterSourceMeasurementDomain wsmDomain : domainList) {
-			WaterSourceMeasurement ws = new WaterSourceMeasurement();
-			ws.setValue(wsmDomain.getValue());
-			ws.setDate(wsmDomain.getDate());
-			entity.add(ws);
-		}
-		
-		return entity;
-	}
-	
-    public Set<WaterSourceMeasurementDomain> getMeasurementList() {
+    public List<WaterSourceMeasurementDomain> getMeasurementList() {
     	if(measurementList == null){
-    		measurementList = new HashSet<WaterSourceMeasurementDomain>();
+    		measurementList = new ArrayList<WaterSourceMeasurementDomain>();
     	}
 		return measurementList;
 	}
 
 	public void setMeasurementList(
-			Set<WaterSourceMeasurementDomain> measurementList) {
+			List<WaterSourceMeasurementDomain> measurementList) {
 		this.measurementList = measurementList;
 	}
 	
