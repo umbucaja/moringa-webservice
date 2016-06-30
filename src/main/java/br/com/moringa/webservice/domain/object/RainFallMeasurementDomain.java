@@ -1,7 +1,7 @@
 package br.com.moringa.webservice.domain.object;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.moringa.webservice.entity.RainFallMeasurement;
@@ -34,6 +34,17 @@ public class RainFallMeasurementDomain {
 		}
 		
 		return domains;
+	}
+	
+	public RainFallMeasurement toRainFallMeasurement(){
+		RainFallMeasurement rfm = new RainFallMeasurement();
+
+		rfm.setId(this.id);
+		rfm.setValue(this.value);
+		rfm.setDate(this.date);
+		rfm.setUnit(this.unit);
+		
+		return rfm;
 	}
 
 	public Long getId() {

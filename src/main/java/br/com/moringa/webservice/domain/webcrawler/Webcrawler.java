@@ -52,6 +52,8 @@ public class Webcrawler {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        
+        rfmService.addRainFalls(result);
         //TODO: Salvar no banco.
     }
 }

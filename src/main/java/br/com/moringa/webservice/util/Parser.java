@@ -14,6 +14,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Node;
 
+import br.com.moringa.webservice.domain.object.RainFallMeasurementDomain;
 import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
 import br.com.moringa.webservice.domain.object.WaterSourceMeasurementDomain;
@@ -54,25 +55,24 @@ public class Parser {
                     Station station = new Station();
                     StringEscapeUtils.unescapeHtml4(elements.get(i).childNodes().get(1).childNodes().get(0).toString());
                     station.setName(StringEscapeUtils.unescapeHtml4(elements.get(i).childNodes().get(1).childNodes().get(0).toString()));
-                    station.setValues(new LinkedList<WaterSourceMeasurementDomain>());
+                    station.setWsmDomainList(new LinkedList<RainFallMeasurementDomain>());
                     for (int j = 3; j < elements.get(i).childNodes().size() ; j++) {
                         if(j%2 != 0){
                             String day = days.childNodes().get(3).childNodes().get(0).childNodes().get(0).toString();
-                            WaterSourceMeasurementDomain water = new WaterSourceMeasurementDomain();
+                            RainFallMeasurementDomain rfm = new RainFallMeasurementDomain();
                             try{
                                 if(!elements.get(i).childNodes().get(j).childNodes().get(0).childNodes().get(0).toString().trim().equals("--")){
                                     try{
-                                        water.setValue(Float.valueOf(elements.get(i).childNodes().get(j).childNodes().get(0).childNodes().get(0).toString().trim()));
+                                    	rfm.setValue(Float.valueOf(elements.get(i).childNodes().get(j).childNodes().get(0).childNodes().get(0).toString().trim()));
                                         String format = day+"/"+mes+"/"+ano;
                                         format = format.replace(" ","");
-                                        water.setDate( fmt.parse(format));
-                                        station.getValues().add(water);
+                                        rfm.setDate( fmt.parse(format));
+                                        station.getWsmDomainList().add(rfm);
                                     }catch (Exception e){
                                         break;
                                     }
-                                }else{
-
                                 }
+                                
                             }catch (Exception x){
 
                             }

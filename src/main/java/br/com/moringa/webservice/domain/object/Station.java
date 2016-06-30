@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Station {
     String name;
-    List<WaterSourceMeasurementDomain> values;
+    List<RainFallMeasurementDomain> wsmDomainList;
 
 
     public String getName() {
@@ -18,11 +18,11 @@ public class Station {
         this.name = name;
     }
 
-    public List<WaterSourceMeasurementDomain> getValues() {
-        return values;
+    public List<RainFallMeasurementDomain> getWsmDomainList() {
+        return wsmDomainList;
     }
 
-    public void setValues(List<WaterSourceMeasurementDomain> values) {
-        this.values = values;
+    public void setWsmDomainList(List<RainFallMeasurementDomain> values) {
+        this.wsmDomainList = values;
     }
 }

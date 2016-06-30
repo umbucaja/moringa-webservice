@@ -27,6 +27,8 @@ public class WaterSourceDomain {
 		this.capacity = ws.getCapacity();
 		this.type = ws.getType();
 		this.city = new CityDomain(ws.getCity());
+		this.measurementList = WaterSourceMeasurementDomain.toWaterSourceMeasurementDomain(ws.getWaterSourceMeasurements());
+		
 	}
 	
 	public static Set<WaterSourceDomain> toWaterSourceDomainSet(Set<WaterSource> waterSources){
@@ -61,7 +63,7 @@ public class WaterSourceDomain {
 			ws.setValue(wsmDomain.getValue());
 			ws.setDate(wsmDomain.getDate());
 			ws.setId(wsmDomain.getId());
-			ws.setWaterSource(wsmDomain.getWaterSource().toWaterSource());
+//			ws.setWaterSource(wsmDomain.getWaterSource().toWaterSource());
 			entity.add(ws);
 		}
 		
