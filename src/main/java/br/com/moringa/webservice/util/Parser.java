@@ -40,7 +40,7 @@ public class Parser {
                     .childNodes().get(1)
                     .childNodes().get(0)
                     .childNodes().get(1)
-                    .childNodes().get(8)
+                    .childNodes().get(10)
                     .childNodes().get(1)
                     .childNodes();
             String data = doc.childNodes().get(0).childNodes().get(2).childNodes().get(1).childNodes().get(1).childNodes().get(0).childNodes().get(1).childNodes().get(1).childNodes().get(1).childNodes().get(1).childNodes().get(2).toString();
@@ -83,7 +83,7 @@ public class Parser {
             }
 
         }catch (Exception e){
-
+        	System.out.println("");
         }
 
 
