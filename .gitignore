@@ -16,3 +16,4 @@ hs_err_pid*
 /.idea/
 /webservice.iml
 /target/
+/.settings/

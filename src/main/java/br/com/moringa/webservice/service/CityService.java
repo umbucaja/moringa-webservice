@@ -20,6 +20,7 @@ import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 import br.com.moringa.webservice.repository.CityRepository;
+import br.com.moringa.webservice.repository.WaterSourceMeasurementRepository;
 
 @Service
 public class CityService {
@@ -27,31 +28,34 @@ public class CityService {
     @Autowired
     CityRepository cityRepository;
 
+    @Autowired
+    WaterSourceMeasurementRepository waterSourceMeasurementRepository;
+
     public List<CityDomain> findAll(){
         List<City> cities = cityRepository.findAll();
         List<CityDomain> domainList = CityDomain.toCityDomain(cities);
-    	
-    	return domainList;
+
+        return domainList;
     }
 
     public CityDomain findOne(Long id){
-    	City city = cityRepository.findOne(id);
-    	CityDomain domain = new CityDomain(city);
-    	
+        City city = cityRepository.findOne(id);
+        CityDomain domain = new CityDomain(city);
+
         return domain;
     }
 
     public City findById(Long id){
-    	City city = cityRepository.findOne(id);
+        City city = cityRepository.findOne(id);
         return city;
     }
-    
+
     public List<CityDomain> findByName(String name) {
-    	
+
         List<City> cities = cityRepository.findByName(name);
         List<CityDomain> domainList = CityDomain.toCityDomain(cities);
-    	
-    	return domainList;
+
+        return domainList;
     }
 
     public Set<WaterSourceDomain> findWaterSourcesByCityId(Long id){
@@ -83,12 +87,11 @@ public class CityService {
                 //Sum amountOfLiters of each water source;
                 Hibernate.initialize(waterSource);
 
-                List <WaterSourceMeasurement> wsm = waterSource.getWaterSourceMeasurements();
+                WaterSourceMeasurement lastMeasutement = waterSourceMeasurementRepository.findFirstByWaterSourceIdOrderByDateDesc(waterSource.getId());
 
-                if(wsm != null && !wsm.isEmpty()){
+                if(lastMeasutement != null){
 
-                    Collections.sort(wsm, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                    amountOfLiters =+ wsm.get(wsm.size()-1).getValue();
+                    amountOfLiters =+ lastMeasutement.getValue();
 
                     List<City> cities = findByWaterSourcesId(waterSource.getId());
                     List<CityDomain> tempList = CityDomain.toCityDomain(cities);
@@ -123,7 +126,7 @@ public class CityService {
         float median = 0.136f;
         float cm = amountLitersByCity(city);
         float persons = amountPersonsByCity(city);
-        long days = (long) (((cm/median)/persons)*1000*3600*24);
+        long days = (long) (cm/median/persons*1000*3600*24);
         Date result = new Date(new Date().getTime()+days);
         return result;
     }
@@ -135,15 +138,13 @@ public class CityService {
             for (WaterSource waterSource : city.getWaterSources()) {
                 Hibernate.initialize(waterSource);
                 Map<Object,Object> source = new HashMap<>();
-                List <WaterSourceMeasurement> wsm = waterSource.getWaterSourceMeasurements();
-                if(wsm != null && !wsm.isEmpty()){
-                    Collections.sort(wsm, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                    WaterSourceMeasurement w = wsm.get(wsm.size()-1);
+                WaterSourceMeasurement lastMeasurement = waterSourceMeasurementRepository.findFirstByWaterSourceIdOrderByDateDesc(waterSource.getId());
+                if(lastMeasurement != null){
                     source.put("name",waterSource.getName());
                     source.put("capacity",waterSource.getCapacity());
-                    source.put("observed",w.getValue());
-                    source.put("date",w.getDate());
-                    source.put("percent",(w.getValue()/waterSource.getCapacity()));
+                    source.put("observed",lastMeasurement.getValue());
+                    source.put("date",lastMeasurement.getDate());
+                    source.put("percent",lastMeasurement.getValue()/waterSource.getCapacity());
                     result.add(source);
                 }
             }

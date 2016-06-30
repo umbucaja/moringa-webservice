@@ -2,9 +2,9 @@ package br.com.moringa.webservice.util;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -17,7 +17,6 @@ import org.jsoup.nodes.Node;
 import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
 import br.com.moringa.webservice.domain.object.WaterSourceMeasurementDomain;
-import br.com.moringa.webservice.entity.Observacao;
 
 /**
  * Created by Thiago Almeida on 16/06/2016.
@@ -93,10 +92,10 @@ public class Parser {
 
     public static List<WaterSourceDomain> getMeasurements(String url) throws ParseException{
         Document doc = null;
-        
+
         Locale localeBR = new Locale("pt", "BR");
         SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy", localeBR);
-        
+
         try {
             doc = Jsoup.parse(new URL(url).openStream(), "ISO-8859-1", url);
         } catch (IOException e) {
@@ -119,11 +118,11 @@ public class Parser {
                 .childNodes().get(1)
                 .childNodes();
         Node element = elements.get(0);
-//        List<Observacao> observacoes = new LinkedList<Observacao>();
+        //        List<Observacao> observacoes = new LinkedList<Observacao>();
         List<WaterSourceDomain> wsList = new LinkedList<>();
-        
+
         for (int i = 2; i < elements.size(); i += 2) {
-//            Observacao obs = new Observacao();
+            //            Observacao obs = new Observacao();
             WaterSourceDomain ws = new WaterSourceDomain();
             WaterSourceMeasurementDomain wsm = new WaterSourceMeasurementDomain();
 
@@ -214,17 +213,23 @@ public class Parser {
                 }
             }
 
-			
-			if(!"".equals(data)){
-				ws.setName(acude);
-				wsm.setDate(fmt.parse(data));
-				wsm.setValue(Float.valueOf(volAtual));
-				ws.getMeasurementList().add(wsm);
-				
-				wsList.add(ws);
-			}
+
+            if(!"".equals(data)){
+                ws.setName(acude);
+                wsm.setDate(fmt.parse(data));
+                wsm.setValue(Float.valueOf(volAtual));
+                ws.getMeasurementList().add(wsm);
+
+                wsList.add(ws);
+            }
 
         }
         return wsList;
+    }
+
+    public static Date stringToDate(String format, String date) throws ParseException {
+        Locale localeBR = new Locale("pt", "BR");
+        SimpleDateFormat fmt = new SimpleDateFormat(format, localeBR);
+        return fmt.parse(date);
     }
 }

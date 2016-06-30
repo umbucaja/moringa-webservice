@@ -15,34 +15,37 @@ public class WaterSourceService {
 
     @Autowired
     WaterSourceRepository wsRepository;
-    
+
     public List<WaterSource> findAll(){
-    	
-    	return wsRepository.findAll();
+        return wsRepository.findAll();
     }
-	
+
     public List<WaterSource> findByCityId(Long id){
-    	return wsRepository.findByCityId(id);
+        return wsRepository.findByCityId(id);
     }
-    
+
+    public WaterSource findById(Long id){
+        return wsRepository.findById(id);
+    }
+
     public void addMeasurements (List<WaterSourceDomain> wsListDomain){
-    		
-    	List<WaterSource> wsList = new ArrayList<WaterSource>();
-    	
-    	for (WaterSourceDomain waterSourceDomain : wsListDomain) {
-    		
-    		WaterSource ws = wsRepository.findByName(waterSourceDomain.getName());
-    		if(null != ws){
-    			
-    			ws.getWaterSourceMeasurements().addAll(WaterSourceDomain.parseMeasurementList(waterSourceDomain.getMeasurementList()));
-    			wsList.add(ws);
-    			wsRepository.save(ws);
-    		}
-		}
-    	
-//    	List<WaterSource> wsList2 = (List<WaterSource>) wsRepository.save(wsList);
-    	
-//    	System.out.println(wsList2);
+
+        List<WaterSource> wsList = new ArrayList<WaterSource>();
+
+        for (WaterSourceDomain waterSourceDomain : wsListDomain) {
+
+            WaterSource ws = wsRepository.findByName(waterSourceDomain.getName());
+            if(null != ws){
+
+                ws.getWaterSourceMeasurements().addAll(WaterSourceDomain.parseMeasurementList(waterSourceDomain.getMeasurementList()));
+                wsList.add(ws);
+                wsRepository.save(ws);
+            }
+        }
+
+        //    	List<WaterSource> wsList2 = (List<WaterSource>) wsRepository.save(wsList);
+
+        //    	System.out.println(wsList2);
     }
-    
+
 }
