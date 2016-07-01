@@ -7,12 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-@Table( uniqueConstraints = { @UniqueConstraint( columnNames = { "date", "id" } ) } )
+@Table( uniqueConstraints = { @UniqueConstraint( columnNames = { "date", "measurement_station_id" } ) } )
 public class RainFallMeasurement implements Serializable {
 
 	/**
@@ -29,6 +32,10 @@ public class RainFallMeasurement implements Serializable {
     private String unit;
     private float value;
 
+    @JsonBackReference
+    @ManyToOne(targetEntity = MeasurementStation.class)
+    private MeasurementStation measurementStation;
+    
     public RainFallMeasurement() {
 
     }
@@ -64,4 +71,12 @@ public class RainFallMeasurement implements Serializable {
     public void setValue(float value) {
         this.value = value;
     }
+
+	public MeasurementStation getMeasurementStation() {
+		return measurementStation;
+	}
+
+	public void setMeasurementStation(MeasurementStation measurementStation) {
+		this.measurementStation = measurementStation;
+	}
 }

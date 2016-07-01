@@ -9,5 +9,6 @@ import br.com.moringa.webservice.entity.MeasurementStation;
 public interface MeasurementStationRepository extends CrudRepository<MeasurementStation, Long> {
 
 	List<MeasurementStation> findAll();
+	MeasurementStation findByName(String name);
 	
 }

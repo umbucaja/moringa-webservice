@@ -3,6 +3,7 @@ package br.com.moringa.webservice.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class MeasurementStation implements Serializable {
@@ -24,7 +27,8 @@ public class MeasurementStation implements Serializable {
     @SequenceGenerator(name = "id")
 	private Long id;
 	
-    @OneToMany(targetEntity = RainFallMeasurement.class)
+	@JsonManagedReference
+    @OneToMany(targetEntity = RainFallMeasurement.class, mappedBy = "measurementStation",cascade = {CascadeType.PERSIST})
     private List<RainFallMeasurement> rainFallMeasurements;
 
     @ManyToOne(targetEntity = City.class)

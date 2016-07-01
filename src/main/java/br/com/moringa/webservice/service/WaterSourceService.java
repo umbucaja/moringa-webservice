@@ -42,10 +42,6 @@ public class WaterSourceService {
                 wsRepository.save(ws);
             }
         }
-
-        //    	List<WaterSource> wsList2 = (List<WaterSource>) wsRepository.save(wsList);
-
-        //    	System.out.println(wsList2);
     }
 
 }

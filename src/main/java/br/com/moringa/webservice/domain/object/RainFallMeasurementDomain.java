@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.moringa.webservice.entity.RainFallMeasurement;
+import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 
 public class RainFallMeasurementDomain {
 
@@ -12,6 +13,7 @@ public class RainFallMeasurementDomain {
     private Date date;
     private String unit;
     private float value;
+    private Long stationId;
 	
 	public RainFallMeasurementDomain (){
 		
@@ -22,6 +24,7 @@ public class RainFallMeasurementDomain {
 		this.date = rain.getDate();
 		this.unit = rain.getUnit();
 		this.value = rain.getValue();
+		this.stationId = rain.getId();
 	}
     
 	public static List<RainFallMeasurementDomain> toRainFallMeasurementDomain(List<RainFallMeasurement> rains){
@@ -77,6 +80,14 @@ public class RainFallMeasurementDomain {
 
 	public void setValue(float value) {
 		this.value = value;
+	}
+
+	public Long getStationId() {
+		return stationId;
+	}
+
+	public void setStationId(Long stationId) {
+		this.stationId = stationId;
 	}
 	
 	

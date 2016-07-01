@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 
 public class WaterSourceMeasurementDomain {
@@ -13,17 +14,13 @@ public class WaterSourceMeasurementDomain {
 	private Long id;
     private float value;
     private Date date;
-//    private WaterSourceDomain waterSource;
+    private Long waterSourceId;
     
 	public WaterSourceMeasurementDomain() {
 	}
 	
 	public WaterSourceMeasurement toWaterSourceMeasurement(){
 		WaterSourceMeasurement wsm = new WaterSourceMeasurement();
-//		if(null != waterSource){
-//			WaterSource ws = this.waterSource.toWaterSource();
-//			wsm.setWaterSource(ws);	
-//		}
 		wsm.setId(this.id);
 		wsm.setValue(this.value);
 		wsm.setDate(this.date);
@@ -35,10 +32,8 @@ public class WaterSourceMeasurementDomain {
 		this.id = ws.getId();
 		this.value = ws.getValue();
 		this.date = ws.getDate();
-//		if(null != ws.getWaterSource()){
-//			WaterSourceDomain wsd = new WaterSourceDomain(ws.getWaterSource());
-//			this.waterSource = wsd;
-//		}
+		this.waterSourceId = ws.getWaterSource().getId();
+
 	}
 
 	public static List<WaterSourceMeasurementDomain> toWaterSourceMeasurementDomain(List<WaterSourceMeasurement> measurements){
@@ -77,13 +72,14 @@ public class WaterSourceMeasurementDomain {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	public long getWaterSourceId() {
+		return waterSourceId;
+	}
+
+	public void setWaterSourceId(long waterSourceId) {
+		this.waterSourceId = waterSourceId;
+	}
 	
-//	public WaterSourceDomain getWaterSource() {
-//		return waterSource;
-//	}
-//
-//	public void setWaterSource(WaterSourceDomain waterSource) {
-//		this.waterSource = waterSource;
-//	}
 	
 }
