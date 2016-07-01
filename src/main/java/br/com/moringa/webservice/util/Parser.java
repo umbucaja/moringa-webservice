@@ -32,17 +32,25 @@ public class Parser {
         } catch (IOException e) {
 
         }
+        List<Node> elements = new LinkedList<>();
+        for (int i = doc.childNodes().get(0).childNodes().get(2).childNodes().get(1).childNodes().get(1).childNodes().get(0).childNodes().get(1).childNodes().size(); i > 0 ; i--) {
+            try{
+                elements = doc
+                        .childNodes().get(0)
+                        .childNodes().get(2)
+                        .childNodes().get(1)
+                        .childNodes().get(1)
+                        .childNodes().get(0)
+                        .childNodes().get(1)
+                        .childNodes().get(i)
+                        .childNodes().get(1)
+                        .childNodes();
+                break;
+            }catch (Exception e){
+
+            }
+        }
         try{
-            List<Node> elements = doc
-                    .childNodes().get(0)
-                    .childNodes().get(2)
-                    .childNodes().get(1)
-                    .childNodes().get(1)
-                    .childNodes().get(0)
-                    .childNodes().get(1)
-                    .childNodes().get(10)
-                    .childNodes().get(1)
-                    .childNodes();
             String data = doc.childNodes().get(0).childNodes().get(2).childNodes().get(1).childNodes().get(1).childNodes().get(0).childNodes().get(1).childNodes().get(1).childNodes().get(1).childNodes().get(1).childNodes().get(2).toString();
             String mes = data.split("de")[3];
             String ano = data.split("de")[4].substring(0,5);
