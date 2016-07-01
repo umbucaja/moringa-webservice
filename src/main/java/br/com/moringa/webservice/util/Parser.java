@@ -32,26 +32,9 @@ public class Parser {
         } catch (IOException e) {
 
         }
-        List<Node> elements = new LinkedList<>();
-        for (int i = doc.childNodes().get(0).childNodes().get(2).childNodes().get(1).childNodes().get(1).childNodes().get(0).childNodes().get(1).childNodes().size(); i > 0 ; i--) {
-            try{
-                elements = doc
-                        .childNodes().get(0)
-                        .childNodes().get(2)
-                        .childNodes().get(1)
-                        .childNodes().get(1)
-                        .childNodes().get(0)
-                        .childNodes().get(1)
-                        .childNodes().get(i)
-                        .childNodes().get(1)
-                        .childNodes();
-                break;
-            }catch (Exception e){
-
-            }
-        }
+        List<Node> elements = doc.select(".tabelaInternaTituloForm").first().childNodes().get(1) .childNodes();
         try{
-            String data = doc.childNodes().get(0).childNodes().get(2).childNodes().get(1).childNodes().get(1).childNodes().get(0).childNodes().get(1).childNodes().get(1).childNodes().get(1).childNodes().get(1).childNodes().get(2).toString();
+            String data = doc.select(".texto").first().childNodes().get(0).toString();
             String mes = data.split("de")[3];
             String ano = data.split("de")[4].substring(0,5);
 
@@ -109,28 +92,11 @@ public class Parser {
         } catch (IOException e) {
 
         }
-        List<Node> elements = doc
-                .childNodes().get(0)
-                .childNodes().get(2)
-                .childNodes().get(1)
-                .childNodes().get(1)
-                .childNodes().get(0)
-                .childNodes().get(1)
-                .childNodes().get(1)
-                .childNodes().get(1)
-                .childNodes().get(1)
-                .childNodes().get(1)
-                .childNodes().get(0)
-                .childNodes().get(1)
-                .childNodes().get(25)
-                .childNodes().get(1)
-                .childNodes();
+        List<Node> elements = doc.select(".tabelaInternaTituloForm").first().childNodes().get(1).childNodes();
         Node element = elements.get(0);
-        //        List<Observacao> observacoes = new LinkedList<Observacao>();
         List<WaterSourceDomain> wsList = new LinkedList<>();
 
         for (int i = 2; i < elements.size(); i += 2) {
-            //            Observacao obs = new Observacao();
             WaterSourceDomain ws = new WaterSourceDomain();
             WaterSourceMeasurementDomain wsm = new WaterSourceMeasurementDomain();
 
