@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,101 +34,120 @@ public class CityCtrl {
     @Autowired
     WaterSourceService wsService;
 
-    @RequestMapping(value="",method = RequestMethod.GET)
-    public ResponseEntity<List<CityDomain>> listCities(@RequestParam(value="name", required=false) String name) {
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<CityDomain>> listCities(@RequestParam(value = "name", required = false) String name) {
         List<CityDomain> response;
 
         if (name != null) {
             response = cityService.findByName(name);
-        }
-        else {
+        } else {
             response = cityService.findAll();
         }
 
         HttpStatus status;
 
-        if(response == null || response.isEmpty()){
+        if (response == null || response.isEmpty()) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<List<CityDomain>>(response,status);
+        return new ResponseEntity<List<CityDomain>>(response, status);
     }
 
-    @RequestMapping(value="/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<CityDomain> findById(@PathVariable("id") Long id) {
 
-    	CityDomain city = cityService.findOne(id);
+        CityDomain city = cityService.findOne(id);
         HttpStatus status;
 
-        if(city == null){
+        if (city == null) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<CityDomain>(city,status);
+        return new ResponseEntity<CityDomain>(city, status);
     }
 
-    @RequestMapping(value="/{id}/watersources",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/watersources", method = RequestMethod.GET)
     public ResponseEntity<Set<WaterSourceDomain>> findWaterSources(@PathVariable("id") Long id) {
 
         Set<WaterSourceDomain> response = cityService.findWaterSourcesByCityId(id);
         HttpStatus status;
 
-        if(response == null || response.isEmpty()){
+        if (response == null || response.isEmpty()) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<Set<WaterSourceDomain>>(response,status);
+        return new ResponseEntity<Set<WaterSourceDomain>>(response, status);
     }
 
-        @RequestMapping(value="/{id}/liters",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/liters", method = RequestMethod.GET)
     public ResponseEntity<LitersPerPersonDomain> findLitersPerPerson(@PathVariable("id") Long id) {
 
         LitersPerPersonDomain response = cityService.findLitersPerPerson(id);
         HttpStatus status;
 
-        if(response == null){
+        if (response == null) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<LitersPerPersonDomain>(response,status);
+        return new ResponseEntity<LitersPerPersonDomain>(response, status);
     }
 
-    @RequestMapping(value="/{id}/water",method = RequestMethod.GET)
+
+    @RequestMapping(value = "/{id}/persons", method = RequestMethod.GET)
+    public ResponseEntity<Long> amountPersonsByCity(@PathVariable("id") Long id) {
+
+        Long response = cityService.findAmountPersonsByCity(id);
+        HttpStatus status;
+        status = HttpStatus.OK;
+        return new ResponseEntity<Long>(response, status);
+    }
+
+
+    @RequestMapping(value = "/{id}/cubicMeters", method = RequestMethod.GET)
+    public ResponseEntity<Float> cubicMeters(@PathVariable("id") Long id) {
+        Float response = cityService.findCubicMeters(id);
+        HttpStatus status;
+        status = HttpStatus.OK;
+        return new ResponseEntity<Float>(response, status);
+    }
+
+
+    @RequestMapping(value = "/{id}/water", method = RequestMethod.GET)
     public ResponseEntity<Date> findDateEndOfWater(@PathVariable("id") Long id) {
 
         Date response = cityService.getEndOfWater(id);
         HttpStatus status;
 
-        if(response == null){
+        if (response == null) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<Date>(response,status);
+        return new ResponseEntity<Date>(response, status);
     }
 
-    @RequestMapping(value="/{id}/reservoir/info",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/reservoir/info", method = RequestMethod.GET)
     public ResponseEntity<List<Object>> waterSourceInfo(@PathVariable("id") Long id) {
 
         List<Object> response = cityService.getInfoWaterSources(id);
         HttpStatus status;
 
-        if(response == null){
+        if (response == null) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<List<Object>>(response,status);
+        return new ResponseEntity<List<Object>>(response, status);
     }
 
 

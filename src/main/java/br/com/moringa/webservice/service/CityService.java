@@ -167,6 +167,12 @@ public class CityService {
         return  amountOfLiters;
     }
 
+
+    public Long findAmountPersonsByCity(Long id){
+        City city = cityRepository.findOne(id);
+        return amountPersonsByCity(city);
+    }
+
     private long amountPersonsByCity(City city){
         long amountOfPopulation = 0;
         if(city != null){
@@ -193,5 +199,11 @@ public class CityService {
     }
 
 
-
+    public float findCubicMeters(Long id) {
+        City city = cityRepository.findOne(id);
+        if(city != null){
+           return amountLitersByCity(city);
+        }
+        return 0;
+    }
 }
