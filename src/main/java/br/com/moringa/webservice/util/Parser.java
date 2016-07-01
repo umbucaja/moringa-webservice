@@ -58,7 +58,7 @@ public class Parser {
                     station.setWsmDomainList(new LinkedList<RainFallMeasurementDomain>());
                     for (int j = 3; j < elements.get(i).childNodes().size() ; j++) {
                         if(j%2 != 0){
-                            String day = days.childNodes().get(3).childNodes().get(0).childNodes().get(0).toString();
+                            String day = days.childNodes().get(j).childNodes().get(0).childNodes().get(0).toString();
                             RainFallMeasurementDomain rfm = new RainFallMeasurementDomain();
                             try{
                                 if(!elements.get(i).childNodes().get(j).childNodes().get(0).childNodes().get(0).toString().trim().equals("--")){
