@@ -36,21 +36,8 @@ public class RainFallMeasurementService {
     public void addRainFalls (List<Station> stationList){
 
         for (Station station : stationList) {
-
-        	if(station.getName().contains("/")){
-        		String[] temp = station.getName().split("/");
-        		station.setName(temp[temp.length - 1]);
-        	}
-        			
         			
         	MeasurementStation ms = msRepository.findByName(station.getName());
-        	
-        	if(null == ms){
-        		LOG.info("********************************");
-        		LOG.info("Station :" + station.getName());
-        		LOG.info("List of Measurements :" + station.getWsmDomainList().toString());
-        		LOG.info("********************************");
-        	}
         	
             for(RainFallMeasurementDomain domain: station.getWsmDomainList()){
 

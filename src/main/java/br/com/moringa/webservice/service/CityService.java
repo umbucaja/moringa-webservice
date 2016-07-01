@@ -15,11 +15,14 @@ import org.springframework.stereotype.Service;
 
 import br.com.moringa.webservice.domain.object.CityDomain;
 import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
+import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
 import br.com.moringa.webservice.entity.City;
+import br.com.moringa.webservice.entity.MeasurementStation;
 import br.com.moringa.webservice.entity.WaterSource;
 import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 import br.com.moringa.webservice.repository.CityRepository;
+import br.com.moringa.webservice.repository.MeasurementStationRepository;
 import br.com.moringa.webservice.repository.WaterSourceMeasurementRepository;
 
 @Service
@@ -30,6 +33,9 @@ public class CityService {
 
     @Autowired
     WaterSourceMeasurementRepository waterSourceMeasurementRepository;
+    
+    @Autowired
+    MeasurementStationRepository msRepository;
 
     public List<CityDomain> findAll(){
         List<City> cities = cityRepository.findAll();
@@ -64,6 +70,16 @@ public class CityService {
         
         return domainList;
     }
+    
+    public List<Station> findStationsByCityId(Long id){
+    	
+        List<MeasurementStation> stations = msRepository.findByCityId(id);
+        
+        List<Station> domainList = Station.toStation(stations); 
+        
+        return domainList;
+    }
+    
 
     public List<City> findByWaterSourcesId(Long id){
         return cityRepository.findByWaterSourcesId(id);

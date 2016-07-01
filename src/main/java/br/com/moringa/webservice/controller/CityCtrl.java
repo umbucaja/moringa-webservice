@@ -7,7 +7,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moringa.webservice.domain.object.CityDomain;
 import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
+import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
 import br.com.moringa.webservice.service.CityService;
-import br.com.moringa.webservice.service.WaterSourceService;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
@@ -30,9 +29,6 @@ public class CityCtrl {
 
     @Autowired
     CityService cityService;
-
-    @Autowired
-    WaterSourceService wsService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<CityDomain>> listCities(@RequestParam(value = "name", required = false) String name) {
@@ -83,6 +79,21 @@ public class CityCtrl {
         }
 
         return new ResponseEntity<Set<WaterSourceDomain>>(response, status);
+    }
+    
+    @RequestMapping(value = "/{id}/stations", method = RequestMethod.GET)
+    public ResponseEntity<List<Station>> findStations(@PathVariable("id") Long id) {
+
+    	List<Station> response = cityService.findStationsByCityId(id);
+        HttpStatus status;
+
+        if (response == null || response.isEmpty()) {
+            status = HttpStatus.NOT_FOUND;
+        } else {
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<List<Station>>(response, status);
     }
 
     @RequestMapping(value = "/{id}/liters", method = RequestMethod.GET)

@@ -10,5 +10,6 @@ public interface MeasurementStationRepository extends CrudRepository<Measurement
 
 	List<MeasurementStation> findAll();
 	MeasurementStation findByName(String name);
+	List<MeasurementStation> findByCityId(Long id);
 	
 }
