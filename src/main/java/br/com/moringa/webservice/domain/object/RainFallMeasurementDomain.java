@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.moringa.webservice.entity.RainFallMeasurement;
-import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 
 public class RainFallMeasurementDomain {
 
@@ -27,7 +26,7 @@ public class RainFallMeasurementDomain {
 		this.stationId = rain.getId();
 	}
     
-	public static List<RainFallMeasurementDomain> toRainFallMeasurementDomain(List<RainFallMeasurement> rains){
+	public static List<RainFallMeasurementDomain> toDomainList(List<RainFallMeasurement> rains){
 		
 		List<RainFallMeasurementDomain> domains = new ArrayList<>();
 		
@@ -39,7 +38,7 @@ public class RainFallMeasurementDomain {
 		return domains;
 	}
 	
-	public RainFallMeasurement toRainFallMeasurement(){
+	public RainFallMeasurement toEntity(){
 		RainFallMeasurement rfm = new RainFallMeasurement();
 
 		rfm.setId(this.id);

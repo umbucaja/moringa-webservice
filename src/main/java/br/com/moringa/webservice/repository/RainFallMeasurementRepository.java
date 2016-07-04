@@ -9,5 +9,6 @@ import br.com.moringa.webservice.entity.RainFallMeasurement;
 public interface RainFallMeasurementRepository extends CrudRepository<RainFallMeasurement, Long> {
 
 	List<RainFallMeasurement> findAll();
+	List<RainFallMeasurement> findByMeasurementStationId(Long id);
 	
 }

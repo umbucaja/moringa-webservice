@@ -28,7 +28,7 @@ public class RainFallMeasurementService {
     public List<RainFallMeasurementDomain> findAll(){
     	
         List<RainFallMeasurement> rains = rfmRepository.findAll();
-        List<RainFallMeasurementDomain> domainList = RainFallMeasurementDomain.toRainFallMeasurementDomain(rains);
+        List<RainFallMeasurementDomain> domainList = RainFallMeasurementDomain.toDomainList(rains);
     	
     	return domainList;
     }
@@ -41,7 +41,7 @@ public class RainFallMeasurementService {
         	
             for(RainFallMeasurementDomain domain: station.getWsmDomainList()){
 
-            	RainFallMeasurement rfm = domain.toRainFallMeasurement();
+            	RainFallMeasurement rfm = domain.toEntity();
             	rfm.setMeasurementStation(ms);
             	
                 try {
