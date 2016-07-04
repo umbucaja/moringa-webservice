@@ -74,8 +74,7 @@ public class CityService {
     public List<Station> findStationsByCityId(Long id){
     	
         List<MeasurementStation> stations = msRepository.findByCityId(id);
-        
-        List<Station> domainList = Station.toStation(stations); 
+        List<Station> domainList = Station.toDomainList(stations); 
         
         return domainList;
     }
@@ -150,7 +149,7 @@ public class CityService {
         City city = cityRepository.findOne(id);
         List<Object> result = null;
         if(city != null){
-            result = new LinkedList();
+            result = new LinkedList<Object>();
             for (WaterSource waterSource : city.getWaterSources()) {
                 Hibernate.initialize(waterSource);
                 Map<Object,Object> source = new HashMap<>();

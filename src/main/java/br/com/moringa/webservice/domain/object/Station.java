@@ -18,7 +18,7 @@ public class Station {
     List<RainFallMeasurementDomain> wsmDomainList;
 
 
-	public static List<Station> toStation(List<MeasurementStation> stations){
+	public static List<Station> toDomainList(List<MeasurementStation> stations){
 		
 		List<Station> domains = new ArrayList<>();
 		

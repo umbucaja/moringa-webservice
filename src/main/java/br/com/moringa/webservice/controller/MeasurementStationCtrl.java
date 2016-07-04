@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moringa.webservice.domain.object.RainFallMeasurementDomain;
-import br.com.moringa.webservice.entity.MeasurementStation;
+import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.service.MeasurementStationService;
 
 /**
@@ -26,9 +26,9 @@ public class MeasurementStationCtrl {
     MeasurementStationService msService;
 
     @RequestMapping(value="",method = RequestMethod.GET)
-    public ResponseEntity<List<MeasurementStation>> findAll() {
+    public ResponseEntity<List<Station>> findAll() {
     	
-    	List<MeasurementStation> response = msService.findAll();
+    	List<Station> response = msService.findAll();
     	HttpStatus status;
     	
     	if(response == null || response.isEmpty()){
@@ -37,7 +37,7 @@ public class MeasurementStationCtrl {
     		status = HttpStatus.OK;
     	}
     	
-        return new ResponseEntity<List<MeasurementStation>>(response,status);
+        return new ResponseEntity<List<Station>>(response,status);
     }
     
     @RequestMapping(value = "/{id}/measurements", method = RequestMethod.GET)
