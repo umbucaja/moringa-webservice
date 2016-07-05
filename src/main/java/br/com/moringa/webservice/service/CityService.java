@@ -139,7 +139,7 @@ public class CityService {
 
     private Date getEndWater(City city) {
         float median = 0.136f;
-        float cm = amountLitersByCity(city);
+        float cm = cubicMetersByCity(city);
         float persons = amountPersonsByCity(city);
         long days = (long) (cm/median/persons*1000*3600*24);
         Date result = new Date(new Date().getTime()+days);
@@ -167,19 +167,19 @@ public class CityService {
         return result;
     }
 
-    private float amountLitersByCity(City city){
-        float amountOfLiters = 0;
+    private float cubicMetersByCity(City city){
+        float amountOfCubicMeters = 0;
         if(city != null){
             for (WaterSource waterSource : city.getWaterSources()) {
                 Hibernate.initialize(waterSource);
                 List <WaterSourceMeasurement> wsm = waterSource.getWaterSourceMeasurements();
                 if(wsm != null && !wsm.isEmpty()){
                     Collections.sort(wsm, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                    amountOfLiters =+ wsm.get(wsm.size()-1).getValue();
+                    amountOfCubicMeters =+ wsm.get(wsm.size()-1).getValue();
                 }
             }
         }
-        return  amountOfLiters;
+        return  amountOfCubicMeters;
     }
 
 
@@ -217,7 +217,7 @@ public class CityService {
     public float findCubicMeters(Long id) {
         City city = cityRepository.findOne(id);
         if(city != null){
-           return amountLitersByCity(city);
+           return cubicMetersByCity(city);
         }
         return 0;
     }

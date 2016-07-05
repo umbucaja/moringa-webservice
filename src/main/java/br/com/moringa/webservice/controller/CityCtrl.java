@@ -126,7 +126,12 @@ public class CityCtrl {
     public ResponseEntity<Float> cubicMeters(@PathVariable("id") Long id) {
         Float response = cityService.findCubicMeters(id);
         HttpStatus status;
-        status = HttpStatus.OK;
+        
+        if (response == null) {
+            status = HttpStatus.NOT_FOUND;
+        } else {
+            status = HttpStatus.OK;
+        }
         return new ResponseEntity<Float>(response, status);
     }
 
