@@ -106,7 +106,7 @@ public class CityService {
 
                 if(lastMeasutement != null){
 
-                    amountOfLiters =+ lastMeasutement.getValue();
+                    amountOfLiters += lastMeasutement.getValue();
 
                     List<City> cities = findByWaterSourcesId(waterSource.getId());
                     List<CityDomain> tempList = CityDomain.toCityDomain(cities);
@@ -114,7 +114,7 @@ public class CityService {
                     for (CityDomain cityDomain : tempList) {
                         if(!cityDomainList.contains(cityDomain)){
                             cityDomainList.add(cityDomain);
-                            amountOfPopulation =+ cityDomain.getPopulation();
+                            amountOfPopulation += cityDomain.getPopulation();
                         }
                     }
                 }
@@ -175,7 +175,7 @@ public class CityService {
                 List <WaterSourceMeasurement> wsm = waterSource.getWaterSourceMeasurements();
                 if(wsm != null && !wsm.isEmpty()){
                     Collections.sort(wsm, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                    amountOfCubicMeters =+ wsm.get(wsm.size()-1).getValue();
+                    amountOfCubicMeters += wsm.get(wsm.size()-1).getValue();
                 }
             }
         }
