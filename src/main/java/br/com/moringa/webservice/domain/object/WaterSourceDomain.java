@@ -31,7 +31,7 @@ public class WaterSourceDomain {
 		
 	}
 	
-	public static Set<WaterSourceDomain> toWaterSourceDomainSet(Set<WaterSource> waterSources){
+	public static Set<WaterSourceDomain> toDomainSet(Set<WaterSource> waterSources){
 		Set<WaterSourceDomain> domains = new HashSet<WaterSourceDomain>();
 		
 		for (WaterSource ws : waterSources) {
