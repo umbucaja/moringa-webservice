@@ -2,9 +2,11 @@ package br.com.moringa.webservice.controller;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import br.com.moringa.webservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,40 +37,40 @@ public class WaterSourceCtrl {
     WaterSourceMeasurementService waterSourceMeasurementService;
 
 
-    @RequestMapping(value="",method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<WaterSource>> findAll() {
         List<WaterSource> response = waterSourceService.findAll();
         HttpStatus status;
 
-        if(response == null || response.isEmpty()){
+        if (response == null || response.isEmpty()) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<List<WaterSource>>(response,status);
+        return new ResponseEntity<List<WaterSource>>(response, status);
     }
 
 
-    @RequestMapping(value="{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ResponseEntity<WaterSource> findById(@PathVariable("id") Long id) {
         WaterSource response = waterSourceService.findById(id);
         HttpStatus status;
 
-        if(response == null){
+        if (response == null) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<WaterSource>(response,status);
+        return new ResponseEntity<WaterSource>(response, status);
     }
 
-    @RequestMapping(value="{id}/measurements",method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/measurements", method = RequestMethod.GET)
     public ResponseEntity<List<WaterSourceMeasurement>> listWatersourceMeasurements(
             @PathVariable("id") Long id,
-            @RequestParam(value="startDate", required=false) String startDateString,
-            @RequestParam(value="endDate", required=false) String endDateString) {
+            @RequestParam(value = "startDate", required = false) String startDateString,
+            @RequestParam(value = "endDate", required = false) String endDateString, @RequestParam(value = "last", required = false) Integer last) {
 
         Date start = null;
         Date end = null;
@@ -76,8 +78,7 @@ public class WaterSourceCtrl {
         try {
             start = startDateString != null ? Parser.stringToDate("dd/MM/yyyy", startDateString) : null;
             end = endDateString != null ? Parser.stringToDate("dd/MM/yyyy", endDateString) : null;
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -87,32 +88,34 @@ public class WaterSourceCtrl {
         if (start == null) {
             if (end == null) {
                 measurements.addAll(waterSourceMeasurementService.findByWaterSourceId(id));
-            }
-            else {
+            } else {
                 measurements.addAll(waterSourceMeasurementService.findByDateBeforeAndWaterSourceId(end, id));
             }
-        }
-        else {
+        } else {
             if (end == null) {
                 measurements.addAll(waterSourceMeasurementService.findByDateAfterAndWaterSourceId(start, id));
-            }
-            else {
+            } else {
                 measurements.addAll(waterSourceMeasurementService.findByDateBetweenAndWaterSourceId(start, end, id));
             }
         }
 
         HttpStatus status;
 
-        if(measurements.isEmpty()){
+        if (measurements.isEmpty()) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
+            if(last != null){
+                Collections.sort(measurements, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+                List<WaterSourceMeasurement> lastTen = measurements.stream().collect(Util.lastN(last));
+                measurements = lastTen;
+            }
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<List<WaterSourceMeasurement>>(measurements,status);
+        return new ResponseEntity<List<WaterSourceMeasurement>>(measurements, status);
     }
 
-    @RequestMapping(value="{id}/measurements/last",method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/measurements/last", method = RequestMethod.GET)
     public ResponseEntity<WaterSourceMeasurement> lastWatersourceMeasurement(
             @PathVariable("id") Long id) {
 
@@ -120,13 +123,13 @@ public class WaterSourceCtrl {
 
         HttpStatus status;
 
-        if(measurement == null){
+        if (measurement == null) {
             status = HttpStatus.NOT_FOUND;
-        }else{
+        } else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<WaterSourceMeasurement>(measurement,status);
+        return new ResponseEntity<WaterSourceMeasurement>(measurement, status);
     }
 
 }
