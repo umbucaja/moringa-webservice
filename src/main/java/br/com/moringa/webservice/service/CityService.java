@@ -2,6 +2,7 @@ package br.com.moringa.webservice.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ import br.com.moringa.webservice.domain.object.CityDomain;
 import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
 import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
+import br.com.moringa.webservice.domain.object.WaterSourceMeasurementDomain;
 import br.com.moringa.webservice.entity.City;
 import br.com.moringa.webservice.entity.MeasurementStation;
 import br.com.moringa.webservice.entity.WaterSource;
@@ -24,6 +26,7 @@ import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 import br.com.moringa.webservice.repository.CityRepository;
 import br.com.moringa.webservice.repository.MeasurementStationRepository;
 import br.com.moringa.webservice.repository.WaterSourceMeasurementRepository;
+import br.com.moringa.webservice.repository.WaterSourceRepository;
 
 @Service
 public class CityService {
@@ -32,7 +35,10 @@ public class CityService {
     CityRepository cityRepository;
 
     @Autowired
-    WaterSourceMeasurementRepository waterSourceMeasurementRepository;
+    WaterSourceRepository wsRepository;
+    
+    @Autowired
+    WaterSourceMeasurementRepository wsmRepository;
     
     @Autowired
     MeasurementStationRepository msRepository;
@@ -64,11 +70,20 @@ public class CityService {
         return domainList;
     }
 
-    public Set<WaterSourceDomain> findWaterSourcesByCityId(Long id){
-        City city = cityRepository.findById(id);
-        Set<WaterSourceDomain> domainList = WaterSourceDomain.toWaterSourceDomainSet(city.getWaterSources());        
+    public Set<WaterSourceDomain> findWaterSourcesByCityId(Long cityId){
+    	
+        Set<WaterSource> wsSet = wsRepository.findByCities_Id(cityId);
+        Set<WaterSourceDomain> domainSet = WaterSourceDomain.toDomainSet(wsSet);    
         
-        return domainList;
+        for (WaterSourceDomain wsDomain : domainSet) {
+        	WaterSourceMeasurement wsm = wsmRepository.findFirstByWaterSourceIdOrderByDateDesc(wsDomain.getId());
+        	wsDomain.getWaterSourceMeasurements().clear();
+        	if(null != wsm){
+        		WaterSourceMeasurementDomain wsmDomain = new WaterSourceMeasurementDomain(wsm);
+            	wsDomain.getWaterSourceMeasurements().add(wsmDomain);
+        	}
+		}
+        return domainSet;
     }
     
     public List<Station> findStationsByCityId(Long id){
@@ -102,7 +117,7 @@ public class CityService {
                 //Sum amountOfLiters of each water source;
                 Hibernate.initialize(waterSource);
 
-                WaterSourceMeasurement lastMeasutement = waterSourceMeasurementRepository.findFirstByWaterSourceIdOrderByDateDesc(waterSource.getId());
+                WaterSourceMeasurement lastMeasutement = wsmRepository.findFirstByWaterSourceIdOrderByDateDesc(waterSource.getId());
 
                 if(lastMeasutement != null){
 
@@ -153,7 +168,7 @@ public class CityService {
             for (WaterSource waterSource : city.getWaterSources()) {
                 Hibernate.initialize(waterSource);
                 Map<Object,Object> source = new HashMap<>();
-                WaterSourceMeasurement lastMeasurement = waterSourceMeasurementRepository.findFirstByWaterSourceIdOrderByDateDesc(waterSource.getId());
+                WaterSourceMeasurement lastMeasurement = wsmRepository.findFirstByWaterSourceIdOrderByDateDesc(waterSource.getId());
                 if(lastMeasurement != null){
                     source.put("name",waterSource.getName());
                     source.put("capacity",waterSource.getCapacity());
@@ -181,7 +196,6 @@ public class CityService {
         }
         return  amountOfCubicMeters;
     }
-
 
     public Long findAmountPersonsByCity(Long id){
         City city = cityRepository.findOne(id);
