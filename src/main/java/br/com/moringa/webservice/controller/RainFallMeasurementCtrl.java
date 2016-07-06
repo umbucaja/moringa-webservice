@@ -23,18 +23,18 @@ public class RainFallMeasurementCtrl {
     @Autowired
     RainFallMeasurementService rfmService;
 
-    @RequestMapping(value="",method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<RainFallMeasurementDomain>> findAll() {
-    	
-    	List<RainFallMeasurementDomain> response = rfmService.findAll();
-    	HttpStatus status;
-    	
-    	if(response == null || response.isEmpty()){
-    		status = HttpStatus.NOT_FOUND;
-    	}else{
-    		status = HttpStatus.OK;
-    	}
-    	
-        return new ResponseEntity<List<RainFallMeasurementDomain>>(response,status);
+
+        List<RainFallMeasurementDomain> response = rfmService.findAll();
+        HttpStatus status;
+
+        if (response == null || response.isEmpty()) {
+            status = HttpStatus.NOT_FOUND;
+        } else {
+            status = HttpStatus.OK;
+        }
+
+        return new ResponseEntity<List<RainFallMeasurementDomain>>(response, status);
     }
 }

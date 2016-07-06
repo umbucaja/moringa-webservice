@@ -104,7 +104,7 @@ public class WaterSourceCtrl {
         if (measurements.isEmpty()) {
             status = HttpStatus.NOT_FOUND;
         } else {
-            if(lastMeasurements != null){
+            if (lastMeasurements != null) {
                 Collections.sort(measurements, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
                 List<WaterSourceMeasurement> lastTen = measurements.stream().collect(Util.lastN(lastMeasurements));
                 measurements = lastTen;

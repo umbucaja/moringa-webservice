@@ -89,7 +89,7 @@ public class CityCtrl {
     }
 
     @RequestMapping(value = "/{id}/stations", method = RequestMethod.GET)
-    public ResponseEntity<List<Station>> findStations(@PathVariable("id") Long id,@RequestParam(value = "lastMeasurements", required = false) Integer lastMeasurements) {
+    public ResponseEntity<List<Station>> findStations(@PathVariable("id") Long id, @RequestParam(value = "lastMeasurements", required = false) Integer lastMeasurements) {
 
         List<Station> response = cityService.findStationsByCityId(id);
 
