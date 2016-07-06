@@ -1,7 +1,9 @@
 package br.com.moringa.webservice.service;
 
+import java.util.Collections;
 import java.util.List;
 
+import br.com.moringa.webservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +31,12 @@ public class MeasurementStationService {
         return domainList;
     }
     
-    public List<RainFallMeasurementDomain> findMeasurementsByStationId(Long id){
-    	
+    public List<RainFallMeasurementDomain> findMeasurementsByStationId(Long id,Integer last){
+
     	List<RainFallMeasurement> rf = rfmRepository.findByMeasurementStationId(id);
-        List<RainFallMeasurementDomain> domainList = RainFallMeasurementDomain.toDomainList(rf); 
-        
+        Collections.sort(rf, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+        List<RainFallMeasurement> lastTen = rf.stream().collect(Util.lastN(last));
+        List<RainFallMeasurementDomain> domainList = RainFallMeasurementDomain.toDomainList(lastTen);
         return domainList;
     }
 	
