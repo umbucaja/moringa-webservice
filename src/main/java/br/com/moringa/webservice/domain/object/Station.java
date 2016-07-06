@@ -17,7 +17,7 @@ public class Station {
     float latitude;
     float longitude;
     
-    List<RainFallMeasurementDomain> wsmDomainList;
+    List<RainFallMeasurementDomain> rainFallMeasurements;
 
 
 	public static List<Station> toDomainList(List<MeasurementStation> stations){
@@ -39,7 +39,7 @@ public class Station {
 		this.name = ms.getName();
 		this.latitude = ms.getLatitude();
 		this.longitude = ms.getLongitude();
-        this.wsmDomainList = RainFallMeasurementDomain.toDomainList(ms.getRainFallMeasurements());
+        this.rainFallMeasurements = RainFallMeasurementDomain.toDomainList(ms.getRainFallMeasurements());
     }
     
     
@@ -52,10 +52,10 @@ public class Station {
     }
 
     public List<RainFallMeasurementDomain> getWsmDomainList() {
-        return wsmDomainList;
+        return rainFallMeasurements;
     }
 
     public void setWsmDomainList(List<RainFallMeasurementDomain> values) {
-        this.wsmDomainList = values;
+        this.rainFallMeasurements = values;
     }
 }
