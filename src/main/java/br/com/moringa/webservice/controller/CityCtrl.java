@@ -1,9 +1,12 @@
 package br.com.moringa.webservice.controller;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import br.com.moringa.webservice.domain.object.*;
+import br.com.moringa.webservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.moringa.webservice.domain.object.CityDomain;
-import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
-import br.com.moringa.webservice.domain.object.Station;
-import br.com.moringa.webservice.domain.object.WaterSourceDomain;
 import br.com.moringa.webservice.service.CityService;
 
 /**
@@ -67,9 +66,17 @@ public class CityCtrl {
     }
 
     @RequestMapping(value = "/{id}/watersources", method = RequestMethod.GET)
-    public ResponseEntity<Set<WaterSourceDomain>> findWaterSources(@PathVariable("id") Long id) {
+    public ResponseEntity<Set<WaterSourceDomain>> findWaterSources(@PathVariable("id") Long id, @RequestParam(value = "last", required = false) Integer last) {
 
         Set<WaterSourceDomain> response = cityService.findWaterSourcesByCityId(id);
+
+        if (last != null) {
+            for (WaterSourceDomain wsd : response) {
+                Collections.sort(wsd.getWaterSourceMeasurements(), (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+                List<WaterSourceMeasurementDomain> lastlist = wsd.getWaterSourceMeasurements().stream().collect(Util.lastN(last));
+                wsd.setWaterSourceMeasurements(lastlist);
+            }
+        }
         HttpStatus status;
 
         if (response == null || response.isEmpty()) {
@@ -80,11 +87,20 @@ public class CityCtrl {
 
         return new ResponseEntity<Set<WaterSourceDomain>>(response, status);
     }
-    
-    @RequestMapping(value = "/{id}/stations", method = RequestMethod.GET)
-    public ResponseEntity<List<Station>> findStations(@PathVariable("id") Long id) {
 
-    	List<Station> response = cityService.findStationsByCityId(id);
+    @RequestMapping(value = "/{id}/stations", method = RequestMethod.GET)
+    public ResponseEntity<List<Station>> findStations(@PathVariable("id") Long id,@RequestParam(value = "last", required = false) Integer last) {
+
+        List<Station> response = cityService.findStationsByCityId(id);
+
+        if (last != null) {
+            for (Station wsd : response) {
+                Collections.sort(wsd.getWsmDomainList(), (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+                List<RainFallMeasurementDomain> lastlist = wsd.getWsmDomainList().stream().collect(Util.lastN(last));
+                wsd.setWsmDomainList(lastlist);
+            }
+        }
+
         HttpStatus status;
 
         if (response == null || response.isEmpty()) {
@@ -126,7 +142,7 @@ public class CityCtrl {
     public ResponseEntity<Float> cubicMeters(@PathVariable("id") Long id) {
         Float response = cityService.findCubicMeters(id);
         HttpStatus status;
-        
+
         if (response == null) {
             status = HttpStatus.NOT_FOUND;
         } else {

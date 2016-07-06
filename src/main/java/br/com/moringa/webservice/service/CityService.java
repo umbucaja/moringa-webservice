@@ -66,8 +66,7 @@ public class CityService {
 
     public Set<WaterSourceDomain> findWaterSourcesByCityId(Long id){
         City city = cityRepository.findById(id);
-        Set<WaterSourceDomain> domainList = WaterSourceDomain.toWaterSourceDomainSet(city.getWaterSources());        
-        
+        Set<WaterSourceDomain> domainList = WaterSourceDomain.toWaterSourceDomainSet(city.getWaterSources());
         return domainList;
     }
     

@@ -1,9 +1,11 @@
 package br.com.moringa.webservice.domain.object;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import br.com.moringa.webservice.entity.MeasurementStation;
+import br.com.moringa.webservice.entity.RainFallMeasurement;
 
 /**
  * Created by Thiago Almeida on 20/06/2016.
@@ -37,7 +39,8 @@ public class Station {
 		this.name = ms.getName();
 		this.latitude = ms.getLatitude();
 		this.longitude = ms.getLongitude();
-	}
+        this.wsmDomainList = RainFallMeasurementDomain.toDomainList(ms.getRainFallMeasurements());
+    }
     
     
     public String getName() {
