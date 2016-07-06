@@ -66,14 +66,14 @@ public class CityCtrl {
     }
 
     @RequestMapping(value = "/{id}/watersources", method = RequestMethod.GET)
-    public ResponseEntity<Set<WaterSourceDomain>> findWaterSources(@PathVariable("id") Long id, @RequestParam(value = "last", required = false) Integer last) {
+    public ResponseEntity<Set<WaterSourceDomain>> findWaterSources(@PathVariable("id") Long id, @RequestParam(value = "lastMeasurements", required = false) Integer lastMeasurements) {
 
         Set<WaterSourceDomain> response = cityService.findWaterSourcesByCityId(id);
 
-        if (last != null) {
+        if (lastMeasurements != null) {
             for (WaterSourceDomain wsd : response) {
                 Collections.sort(wsd.getWaterSourceMeasurements(), (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                List<WaterSourceMeasurementDomain> lastlist = wsd.getWaterSourceMeasurements().stream().collect(Util.lastN(last));
+                List<WaterSourceMeasurementDomain> lastlist = wsd.getWaterSourceMeasurements().stream().collect(Util.lastN(lastMeasurements));
                 wsd.setWaterSourceMeasurements(lastlist);
             }
         }
@@ -89,14 +89,14 @@ public class CityCtrl {
     }
 
     @RequestMapping(value = "/{id}/stations", method = RequestMethod.GET)
-    public ResponseEntity<List<Station>> findStations(@PathVariable("id") Long id,@RequestParam(value = "last", required = false) Integer last) {
+    public ResponseEntity<List<Station>> findStations(@PathVariable("id") Long id,@RequestParam(value = "lastMeasurements", required = false) Integer lastMeasurements) {
 
         List<Station> response = cityService.findStationsByCityId(id);
 
-        if (last != null) {
+        if (lastMeasurements != null) {
             for (Station wsd : response) {
                 Collections.sort(wsd.getWsmDomainList(), (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                List<RainFallMeasurementDomain> lastlist = wsd.getWsmDomainList().stream().collect(Util.lastN(last));
+                List<RainFallMeasurementDomain> lastlist = wsd.getWsmDomainList().stream().collect(Util.lastN(lastMeasurements));
                 wsd.setWsmDomainList(lastlist);
             }
         }

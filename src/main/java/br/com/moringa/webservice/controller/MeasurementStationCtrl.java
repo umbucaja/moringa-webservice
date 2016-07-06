@@ -38,11 +38,11 @@ public class MeasurementStationCtrl {
     }
 
     @RequestMapping(value = "/{id}/measurements", method = RequestMethod.GET)
-    public ResponseEntity<List<RainFallMeasurementDomain>> findStations(@PathVariable("id") Long id, @RequestParam(value = "last", required = false) Integer last) {
+    public ResponseEntity<List<RainFallMeasurementDomain>> findStations(@PathVariable("id") Long id, @RequestParam(value = "lastMeasurements", required = false) Integer lastMeasurements) {
 
-        if(last == null) last = 0;
+        if(lastMeasurements == null) lastMeasurements = 0;
 
-        List<RainFallMeasurementDomain> response = msService.findMeasurementsByStationId(id,last);
+        List<RainFallMeasurementDomain> response = msService.findMeasurementsByStationId(id,lastMeasurements);
         HttpStatus status;
 
         if (response == null || response.isEmpty()) {

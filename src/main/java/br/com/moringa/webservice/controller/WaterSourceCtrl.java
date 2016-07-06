@@ -70,7 +70,7 @@ public class WaterSourceCtrl {
     public ResponseEntity<List<WaterSourceMeasurement>> listWatersourceMeasurements(
             @PathVariable("id") Long id,
             @RequestParam(value = "startDate", required = false) String startDateString,
-            @RequestParam(value = "endDate", required = false) String endDateString, @RequestParam(value = "last", required = false) Integer last) {
+            @RequestParam(value = "endDate", required = false) String endDateString, @RequestParam(value = "lastMeasurements", required = false) Integer lastMeasurements) {
 
         Date start = null;
         Date end = null;
@@ -104,9 +104,9 @@ public class WaterSourceCtrl {
         if (measurements.isEmpty()) {
             status = HttpStatus.NOT_FOUND;
         } else {
-            if(last != null){
+            if(lastMeasurements != null){
                 Collections.sort(measurements, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                List<WaterSourceMeasurement> lastTen = measurements.stream().collect(Util.lastN(last));
+                List<WaterSourceMeasurement> lastTen = measurements.stream().collect(Util.lastN(lastMeasurements));
                 measurements = lastTen;
             }
             status = HttpStatus.OK;
