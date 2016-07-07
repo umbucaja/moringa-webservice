@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import br.com.moringa.webservice.domain.object.*;
-import br.com.moringa.webservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.moringa.webservice.domain.object.CityDomain;
+import br.com.moringa.webservice.domain.object.RainFallMeasurementDomain;
+import br.com.moringa.webservice.domain.object.Station;
+import br.com.moringa.webservice.domain.object.WaterSourceDomain;
+import br.com.moringa.webservice.domain.object.WaterSourceMeasurementDomain;
 import br.com.moringa.webservice.service.CityService;
+import br.com.moringa.webservice.util.Util;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
@@ -80,7 +84,7 @@ public class CityCtrl {
         HttpStatus status;
 
         if (response == null || response.isEmpty()) {
-            status = HttpStatus.NOT_FOUND;
+            status = HttpStatus.NO_CONTENT;
         } else {
             status = HttpStatus.OK;
         }
@@ -104,7 +108,7 @@ public class CityCtrl {
         HttpStatus status;
 
         if (response == null || response.isEmpty()) {
-            status = HttpStatus.NOT_FOUND;
+            status = HttpStatus.NO_CONTENT;
         } else {
             status = HttpStatus.OK;
         }
@@ -113,18 +117,19 @@ public class CityCtrl {
     }
 
     @RequestMapping(value = "/{id}/liters", method = RequestMethod.GET)
-    public ResponseEntity<LitersPerPersonDomain> findLitersPerPerson(@PathVariable("id") Long id) {
+    public ResponseEntity<Float> findLitersPerPerson(@PathVariable("id") Long id) {
 
-        LitersPerPersonDomain response = cityService.findLitersPerPerson(id);
+        Float response = cityService.findLitersPerPerson(id);
         HttpStatus status;
 
-        if (response == null) {
-            status = HttpStatus.NOT_FOUND;
-        } else {
+        if (response == 0) {
+            status = HttpStatus.NO_CONTENT;
+        }
+        else {
             status = HttpStatus.OK;
         }
 
-        return new ResponseEntity<LitersPerPersonDomain>(response, status);
+        return new ResponseEntity<Float>(response, status);
     }
 
 
@@ -133,7 +138,13 @@ public class CityCtrl {
 
         Long response = cityService.findAmountPersonsByCity(id);
         HttpStatus status;
-        status = HttpStatus.OK;
+
+        if (response == 0) {
+            status = HttpStatus.NO_CONTENT;
+        }
+        else {
+            status = HttpStatus.OK;
+        }
         return new ResponseEntity<Long>(response, status);
     }
 
@@ -143,9 +154,10 @@ public class CityCtrl {
         Float response = cityService.findCubicMeters(id);
         HttpStatus status;
 
-        if (response == null) {
-            status = HttpStatus.NOT_FOUND;
-        } else {
+        if (response == 0) {
+            status = HttpStatus.NO_CONTENT;
+        }
+        else {
             status = HttpStatus.OK;
         }
         return new ResponseEntity<Float>(response, status);
@@ -159,7 +171,7 @@ public class CityCtrl {
         HttpStatus status;
 
         if (response == null) {
-            status = HttpStatus.NOT_FOUND;
+            status = HttpStatus.NO_CONTENT;
         } else {
             status = HttpStatus.OK;
         }

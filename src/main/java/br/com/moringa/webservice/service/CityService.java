@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.moringa.webservice.domain.object.CityDomain;
-import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
 import br.com.moringa.webservice.domain.object.Station;
 import br.com.moringa.webservice.domain.object.WaterSourceDomain;
 import br.com.moringa.webservice.entity.City;
@@ -33,7 +32,7 @@ public class CityService {
 
     @Autowired
     WaterSourceMeasurementRepository waterSourceMeasurementRepository;
-    
+
     @Autowired
     MeasurementStationRepository msRepository;
 
@@ -69,33 +68,34 @@ public class CityService {
         Set<WaterSourceDomain> domainList = WaterSourceDomain.toDomainSet(city.getWaterSources());
         return domainList;
     }
-    
+
     public List<Station> findStationsByCityId(Long id){
-    	
+
         List<MeasurementStation> stations = msRepository.findByCityId(id);
-        List<Station> domainList = Station.toDomainList(stations); 
-        
+        List<Station> domainList = Station.toDomainList(stations);
+
         return domainList;
     }
-    
+
 
     public List<City> findByWaterSourcesId(Long id){
         return cityRepository.findByWaterSourcesId(id);
     }
 
-    public LitersPerPersonDomain findLitersPerPerson(Long id){
+    public float findLitersPerPerson(Long id){
 
         City city = findById(id);
         List<CityDomain> cityDomainList = new ArrayList<>();
-        LitersPerPersonDomain liters = new LitersPerPersonDomain();
+        //        LitersPerPersonDomain liters = new LitersPerPersonDomain();
+        float liters = 0;
 
         if(city != null){
 
             float amountOfLiters = 0;
             float amountOfPopulation = 0;
 
-            liters.setCity(city.getName());
-            liters.setLiters(0);
+            //            liters.setCity(city.getName());
+            //            liters.setLiters(0);
             for (WaterSource waterSource : city.getWaterSources()) {
 
                 //Sum amountOfLiters of each water source;
@@ -121,7 +121,8 @@ public class CityService {
 
             //Calc the return
             if(amountOfPopulation != 0){
-                liters.setLiters(amountOfLiters/amountOfPopulation);
+                //                liters.setLiters(amountOfLiters/amountOfPopulation);
+                liters = amountOfLiters/amountOfPopulation;
             }
 
 
@@ -141,7 +142,7 @@ public class CityService {
         float cm = cubicMetersByCity(city);
         float persons = amountPersonsByCity(city);
         long days = (long) (cm/median/persons*1000*3600*24);
-        Date result = new Date(new Date().getTime()+days);
+        Date result = days > 0 ? new Date(new Date().getTime()+days) : null;
         return result;
     }
     public List<Object> getInfoWaterSources(Long id){
@@ -216,7 +217,7 @@ public class CityService {
     public float findCubicMeters(Long id) {
         City city = cityRepository.findOne(id);
         if(city != null){
-           return cubicMetersByCity(city);
+            return cubicMetersByCity(city);
         }
         return 0;
     }
