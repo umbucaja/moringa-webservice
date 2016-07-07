@@ -22,35 +22,35 @@ public class RainFallMeasurementService {
     RainFallMeasurementRepository rfmRepository;
     @Autowired
     MeasurementStationRepository msRepository;
-    
+
     private static final Logger LOG = LoggerFactory.getLogger(RainFallMeasurementService.class);
-    
+
     public List<RainFallMeasurementDomain> findAll(){
-    	
+
         List<RainFallMeasurement> rains = rfmRepository.findAll();
         List<RainFallMeasurementDomain> domainList = RainFallMeasurementDomain.toDomainList(rains);
-    	
-    	return domainList;
+
+        return domainList;
     }
-    
+
     public void addRainFalls (List<Station> stationList){
 
         for (Station station : stationList) {
-        			
-        	MeasurementStation ms = msRepository.findByName(station.getName());
-        	
-            for(RainFallMeasurementDomain domain: station.getWsmDomainList()){
 
-            	RainFallMeasurement rfm = domain.toEntity();
-            	rfm.setMeasurementStation(ms);
-            	
+            MeasurementStation ms = msRepository.findByName(station.getName());
+
+            for(RainFallMeasurementDomain domain: station.getRainFallMeasurements()){
+
+                RainFallMeasurement rfm = domain.toEntity();
+                rfm.setMeasurementStation(ms);
+
                 try {
-                	rfmRepository.save(rfm);
+                    rfmRepository.save(rfm);
                 } catch (DataIntegrityViolationException dive) {
                     // TODO: handle exception
                 }
             }
         }
     }
-	
+
 }

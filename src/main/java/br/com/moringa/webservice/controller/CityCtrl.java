@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import br.com.moringa.webservice.domain.object.*;
-import br.com.moringa.webservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.moringa.webservice.domain.object.CityDomain;
+import br.com.moringa.webservice.domain.object.LitersPerPersonDomain;
+import br.com.moringa.webservice.domain.object.RainFallMeasurementDomain;
+import br.com.moringa.webservice.domain.object.Station;
+import br.com.moringa.webservice.domain.object.WaterSourceDomain;
+import br.com.moringa.webservice.domain.object.WaterSourceMeasurementDomain;
 import br.com.moringa.webservice.service.CityService;
+import br.com.moringa.webservice.util.Util;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
@@ -95,9 +100,9 @@ public class CityCtrl {
 
         if (lastMeasurements != null) {
             for (Station wsd : response) {
-                Collections.sort(wsd.getWsmDomainList(), (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
-                List<RainFallMeasurementDomain> lastlist = wsd.getWsmDomainList().stream().collect(Util.lastN(lastMeasurements));
-                wsd.setWsmDomainList(lastlist);
+                Collections.sort(wsd.getRainFallMeasurements(), (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+                List<RainFallMeasurementDomain> lastlist = wsd.getRainFallMeasurements().stream().collect(Util.lastN(lastMeasurements));
+                wsd.setRainFallMeasurements(lastlist);
             }
         }
 

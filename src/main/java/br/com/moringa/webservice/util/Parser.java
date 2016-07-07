@@ -46,7 +46,7 @@ public class Parser {
                     Station station = new Station();
                     StringEscapeUtils.unescapeHtml4(elements.get(i).childNodes().get(1).childNodes().get(0).toString());
                     station.setName(StringEscapeUtils.unescapeHtml4(elements.get(i).childNodes().get(1).childNodes().get(0).toString()));
-                    station.setWsmDomainList(new LinkedList<RainFallMeasurementDomain>());
+                    station.setRainFallMeasurements(new LinkedList<RainFallMeasurementDomain>());
                     for (int j = 3; j < elements.get(i).childNodes().size() ; j++) {
                         if(j%2 != 0){
                             String day = days.childNodes().get(j).childNodes().get(0).childNodes().get(0).toString();
@@ -54,16 +54,16 @@ public class Parser {
                             try{
                                 if(!elements.get(i).childNodes().get(j).childNodes().get(0).childNodes().get(0).toString().trim().equals("--")){
                                     try{
-                                    	rfm.setValue(Float.valueOf(elements.get(i).childNodes().get(j).childNodes().get(0).childNodes().get(0).toString().trim()));
+                                        rfm.setValue(Float.valueOf(elements.get(i).childNodes().get(j).childNodes().get(0).childNodes().get(0).toString().trim()));
                                         String format = day+"/"+mes+"/"+ano;
                                         format = format.replace(" ","");
                                         rfm.setDate( fmt.parse(format));
-                                        station.getWsmDomainList().add(rfm);
+                                        station.getRainFallMeasurements().add(rfm);
                                     }catch (Exception e){
                                         break;
                                     }
                                 }
-                                
+
                             }catch (Exception x){
 
                             }
@@ -74,7 +74,7 @@ public class Parser {
             }
 
         }catch (Exception e){
-        	System.out.println("");
+            System.out.println("");
         }
 
 
