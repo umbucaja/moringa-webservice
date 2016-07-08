@@ -86,7 +86,6 @@ public class CityService {
 
         City city = findById(id);
         List<CityDomain> cityDomainList = new ArrayList<>();
-        //        LitersPerPersonDomain liters = new LitersPerPersonDomain();
         float liters = 0;
 
         if(city != null){
@@ -94,8 +93,6 @@ public class CityService {
             float amountOfLiters = 0;
             float amountOfPopulation = 0;
 
-            //            liters.setCity(city.getName());
-            //            liters.setLiters(0);
             for (WaterSource waterSource : city.getWaterSources()) {
 
                 //Sum amountOfLiters of each water source;
@@ -121,7 +118,6 @@ public class CityService {
 
             //Calc the return
             if(amountOfPopulation != 0){
-                //                liters.setLiters(amountOfLiters/amountOfPopulation);
                 liters = amountOfLiters/amountOfPopulation;
             }
 

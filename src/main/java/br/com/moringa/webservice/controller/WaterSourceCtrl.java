@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import br.com.moringa.webservice.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,7 @@ import br.com.moringa.webservice.entity.WaterSourceMeasurement;
 import br.com.moringa.webservice.service.WaterSourceMeasurementService;
 import br.com.moringa.webservice.service.WaterSourceService;
 import br.com.moringa.webservice.util.Parser;
+import br.com.moringa.webservice.util.Util;
 
 /**
  * Created by Luiz Corrêa on 17/06/2016.
@@ -102,7 +102,7 @@ public class WaterSourceCtrl {
         HttpStatus status;
 
         if (measurements.isEmpty()) {
-            status = HttpStatus.NOT_FOUND;
+            status = HttpStatus.NO_CONTENT;
         } else {
             if (lastMeasurements != null) {
                 Collections.sort(measurements, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
