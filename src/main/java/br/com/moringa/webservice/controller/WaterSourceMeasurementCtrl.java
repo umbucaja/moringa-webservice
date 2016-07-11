@@ -23,7 +23,7 @@ public class WaterSourceMeasurementCtrl {
     @Autowired
     WaterSourceMeasurementService wsmService;
 
-    @RequestMapping(value="",method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<WaterSourceMeasurement>> findAll() {
         return new ResponseEntity<List<WaterSourceMeasurement>>(wsmService.findAll(), HttpStatus.OK);
     }
