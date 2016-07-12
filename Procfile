@@ -1,1 +1,1 @@
-web: java -jar target/webservice.jar
+web: java -Dserver.port=$PORT -jar target/webservice-0.0.1-SNAPSHOT.jar
