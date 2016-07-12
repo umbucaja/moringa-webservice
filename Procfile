@@ -1,1 +1,1 @@
-web: java -jar target/moringa-webservice.jar
+web: java -jar target/webservice.jar
