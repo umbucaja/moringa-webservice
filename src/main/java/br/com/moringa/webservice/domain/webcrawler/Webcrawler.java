@@ -30,7 +30,7 @@ public class Webcrawler {
     @Autowired
     RainFallMeasurementService rfmService;
 	
-    @Scheduled(fixedDelay=86400000)
+    @Scheduled(cron="45 14 * * *")
     public void getObservations() throws ParseException{
         String url = "http://site2.aesa.pb.gov.br/aesa/volumesAcudes.do?metodo=preparaUltimosVolumesPorAcude2";
         List<WaterSourceDomain> list = Parser.getMeasurements(url);
@@ -39,7 +39,7 @@ public class Webcrawler {
         
     }
 
-    @Scheduled(fixedDelay=86400000)
+    @Scheduled(cron="45 14 * * *")
     public void getRainfall(){
         String url1 = "http://site2.aesa.pb.gov.br/aesa/monitoramentoPluviometria.do?metodo=listarChuvasDiarias&dia=1";
         String url2 = "http://site2.aesa.pb.gov.br/aesa/monitoramentoPluviometria.do?metodo=listarChuvasDiarias&dia=11";
