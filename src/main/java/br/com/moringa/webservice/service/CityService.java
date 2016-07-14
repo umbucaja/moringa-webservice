@@ -90,7 +90,7 @@ public class CityService {
 
         if(city != null){
 
-            float amountOfLiters = 0;
+            float amountOfCubicMeters = 0;
             float amountOfPopulation = 0;
 
             for (WaterSource waterSource : city.getWaterSources()) {
@@ -102,7 +102,7 @@ public class CityService {
 
                 if(lastMeasutement != null){
 
-                    amountOfLiters += lastMeasutement.getValue();
+                    amountOfCubicMeters += lastMeasutement.getValue();
 
                     List<City> cities = findByWaterSourcesId(waterSource.getId());
                     List<CityDomain> tempList = CityDomain.toCityDomain(cities);
@@ -118,7 +118,7 @@ public class CityService {
 
             //Calc the return
             if(amountOfPopulation != 0){
-                liters = amountOfLiters/amountOfPopulation;
+                liters = amountOfCubicMeters/amountOfPopulation * 1000;
             }
 
 
