@@ -1,7 +1,6 @@
 package br.com.moringa.webservice.domain.webcrawler;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,23 +37,6 @@ public class Webcrawler {
 
         wsmService.addMeasurements(list);
 
-    }
-
-    @Scheduled(cron="0 5 9 * * *")
-    public void teste1() throws ParseException{
-        System.out.println("TESTANDO OS WORKERS 1: " + new Date().toString());
-    }
-    @Scheduled(cron="0 7 9 * * *")
-    public void teste2() throws ParseException{
-        System.out.println("TESTANDO OS WORKERS 2: " + new Date().toString());
-    }
-    @Scheduled(cron="0 10 9 * * *")
-    public void teste3() throws ParseException{
-        System.out.println("TESTANDO OS WORKERS 3: " + new Date().toString());
-    }
-    @Scheduled(cron="0 15 9 * * *")
-    public void teste4() throws ParseException{
-        System.out.println("TESTANDO OS WORKERS 4: " + new Date().toString());
     }
 
     @Scheduled(cron="0 15 11 * * *")
